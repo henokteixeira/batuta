@@ -17,7 +17,7 @@ In one sentence: you define with the Definer, the Orchestrator executes, and you
 ## At the end
 
 7. It writes the state note in the logs stack and ends with TASK_COMPLETE or BLOCKED. Findings become tickets or are discarded.
-8. The next round starts with a restarted Orchestrator reading the state note. The notes are the memory; the session is not.
+8. Clear the context yourself: once the Orchestrator ends with TASK_COMPLETE or BLOCKED, type `/clear` in its terminal; same for the Definer at the end of a definition session, after its `definition · <date>` note. Executors are restarted by the Orchestrator. Never leave it to auto-compact. The next round starts from the state note; the notes are the memory, the session is not.
 
 ## High parallelism
 
