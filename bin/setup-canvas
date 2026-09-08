@@ -1,0 +1,54 @@
+#!/bin/bash
+# Run once inside the Orchestrator terminal of a Batuta workspace, with Maestro Mode on.
+# Idempotent: creates what is missing, replaces the old Portuguese note names, wires everything, schedules the routines.
+set -u
+B="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+DEFINER="${DEFINER:-Definidor}"
+LIST=$(maestri list 2>&1)
+if echo "$LIST" | grep -q "maestro: false"; then
+  echo "This terminal is not the Maestro. Toggle Maestro Mode on it and run again."; exit 1
+fi
+
+have() { echo "$LIST" | grep -q "name: \"$1\""; }
+
+for old in painel "pra você" achados "como funciona"; do
+  if have "$old"; then maestri note delete "$old" >/dev/null 2>&1 && echo "removed note '$old'"; fi
+done
+
+for n in board "for you" findings "how it works"; do
+  if have "$n"; then echo "note '$n' already there"; else
+    maestri note create "$(cat "$B/templates/notes/$n.md")" --name "$n" >/dev/null 2>&1 && echo "created note '$n'"
+  fi
+done
+
+if ! have "voice"; then
+  maestri recruit "voice" --preset "Shell" --dir "$HOME" >/dev/null 2>&1 && echo "recruited Shell terminal 'voice'"
+fi
+
+LIST=$(maestri list 2>&1)
+if echo "$LIST" | grep -q "name: \"$DEFINER\""; then
+  for n in board "for you" findings "how it works" voice; do
+    maestri connect "$n" "$DEFINER" >/dev/null 2>&1 && echo "wired '$n' <-> '$DEFINER'"
+  done
+else
+  echo "no terminal named '$DEFINER' is connected to you: wire the Definer to this terminal in the canvas and run again for the ropes"
+fi
+
+ROUTINES=$(maestri routine list 2>&1)
+if ! echo "$ROUTINES" | grep -q "morning state"; then
+  maestri routine create "morning state" --daily 08:30 \
+    --command "Start of day. Read the latest 'state ·' note in the logs stack, list the ready-for-agent tickets with no open blocker in Linear, refresh the board and the for-you notes so they match reality, and write three lines in the board: what is in flight, what waits for Henok, what is ready to start. Do not dispatch anything." \
+    >/dev/null 2>&1 && echo "routine 'morning state' at 08:30"
+fi
+if ! echo "$ROUTINES" | grep -q "evening handoff"; then
+  maestri routine create "evening handoff" --daily 18:30 \
+    --command "End of day. Verify what came back from executors, record decisions on the tickets, turn findings into tickets or discard them, then use the handoff skill to write a 'state · <today>' note in the logs stack. End with TASK_COMPLETE or BLOCKED: waiting on user tasks. Do not start new work." \
+    >/dev/null 2>&1 && echo "routine 'evening handoff' at 18:30"
+fi
+if ! echo "$ROUTINES" | grep -q "for you reminder"; then
+  maestri routine create "for you reminder" --weekly mon,tue,wed,thu,fri@12:00 --reminder \
+    --command "Batuta: anything waiting in the 'for you' note?" \
+    >/dev/null 2>&1 && echo "reminder 'for you reminder' weekdays at 12:00"
+fi
+
+echo; maestri list; echo; maestri routine list

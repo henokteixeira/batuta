@@ -12,7 +12,7 @@ One workspace for Shema, called **Shema**, rooted at `~/Documents/programming/ob
 
 - **Definidor** (the Definer) — the terminal you talk to in order to define. Fable, high effort.
 - **Orquestrador** (the Orchestrator) — the terminal that runs the queue. Fable, high effort while planning. Needs **Maestro Mode on** to recruit executors: toggle it on the terminal the first time.
-- **voice** — a Shell terminal for the voice kit, wired to the Definer (create it once: New Terminal → Shell → connect it to Definidor).
+- **voice** — a Shell terminal for the voice kit, wired to the Definer. `setup-canvas`, run once in the Orchestrator terminal with Maestro Mode on, creates it, creates and wires the four notes, and schedules the routines (morning state at 08:30, evening handoff at 18:30, a weekday reminder at noon to check `for you`).
 - Four notes: **board** (one line per task in flight), **for you** (only what is blocked on you; closed questions), **findings** (what showed up out of scope; only grows), and the **logs** stack (the state of each round and the log of each task; you almost never open it).
 
 The old workspaces are in the **Arquivo** folder inside the Shema YWAM group, intact, with their terminals and notes. Delete them whenever you like; the notes are exported in `batuta/archive/notes/`. The **teste** workspace in "Arquivo (apagar)" was the mould and can be deleted. **Quick Sermon** was not touched.
