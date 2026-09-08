@@ -1,6 +1,6 @@
 <required>
 - *CRITICAL* Add each element of this checklist to your Todo list using TodoWrite. The last element should be 'Finish development with final checks...'. DO NOT BE LAZY.
-- Announce "Seguindo o fluxo Batuta..." to the user.
+- Announce "Following the Batuta workflow..." to the user.
 <system-reminder> Do not skip steps. Do not rationalize. Read the skill files even if you think you know them. </system-reminder>
 - Read `{{skills_dir}}/using-skills/SKILL.md`.
 - Read the repo's `CONTEXT.md` (glossary) and `docs/adr/` if they exist, and the spec or ticket this work comes from. Use the glossary's terms in code, tests, plans and commits.

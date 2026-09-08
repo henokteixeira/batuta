@@ -1,0 +1,3 @@
+#!/bin/bash
+TTS_DIR="${TTS_DIR:-$HOME/Library/Application Support/batuta-tts}"
+exec "$TTS_DIR/venv/bin/python" "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/grill-voice.py" "$@"

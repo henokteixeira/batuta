@@ -1,0 +1,32 @@
+#!/bin/bash
+# listen [pt|en|auto]  -> records from the microphone until Enter, transcribes with whisper.cpp, prints the text
+# Env: LISTEN_MODEL, LISTEN_DEVICE (avfoundation ":<index>", 1 = MacBook Pro Microphone), LISTEN_PROMPT
+set -e
+LANG_CODE="${1:-auto}"
+MODEL="${LISTEN_MODEL:-$HOME/.cache/whisper-cpp/ggml-large-v3-turbo.bin}"
+DEVICE="${LISTEN_DEVICE:-:1}"
+TMP=$(mktemp -d)
+WAV="$TMP/rec.wav"
+trap 'rm -rf "$TMP"' EXIT
+
+[ -s "$MODEL" ] || { echo "listen: model not found at $MODEL" >&2; exit 1; }
+
+ffmpeg -hide_banner -loglevel error -f avfoundation -i "$DEVICE" -ac 1 -ar 16000 -t 180 "$WAV" </dev/null &
+FF=$!
+sleep 0.3
+printf '\a🎙  recording… (Enter to stop) ' >&2
+read -r _ </dev/tty
+kill -INT "$FF" 2>/dev/null || true
+wait "$FF" 2>/dev/null || true
+printf '\r⏳ transcribing…            \r' >&2
+
+[ -s "$WAV" ] || { echo "listen: nothing recorded (microphone blocked? System Settings › Privacy & Security › Microphone)" >&2; exit 1; }
+MEAN=$(ffmpeg -hide_banner -i "$WAV" -af volumedetect -f null - 2>&1 | sed -n 's/.*mean_volume: \(-*[0-9.]*\) dB.*/\1/p')
+if [ -n "$MEAN" ] && [ "$(printf '%.0f' "$MEAN")" -lt -45 ]; then
+  echo "listen: silent recording (mean volume ${MEAN} dB). Microphone permission for Maestri?" >&2
+  exit 2
+fi
+
+whisper-cli -m "$MODEL" -l "$LANG_CODE" -f "$WAV" -nt -np --prompt "${LISTEN_PROMPT:-Pergunta um, opção A. Pergunta dois, opção B.}" -nth 0.5 2>/dev/null \
+  | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//' | grep -v '^$' | tr '\n' ' ' | sed 's/ $//'
+echo

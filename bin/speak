@@ -1,0 +1,42 @@
+#!/bin/bash
+# speak "text" [pt|en] [voice]     |  echo "text" | speak - [pt|en] [voice]
+# SPEAK_NO_PLAY=1 speak "text"     -> synthesize only (cached) and print the wav path
+# Env: SPEAK_SPEED (1.05), SPEAK_VOICE_PT (pm_santa), SPEAK_VOICE_EN (af_heart), TTS_DIR
+TEXT="$1"; [ "$TEXT" = "-" ] && TEXT=$(cat)
+LANG_CODE="${2:-pt}"
+TTS_DIR="${TTS_DIR:-$HOME/Library/Application Support/batuta-tts}"
+PY="$TTS_DIR/venv/bin/python"
+SPEED="${SPEAK_SPEED:-1.05}"
+case "$LANG_CODE" in
+  en) VOICE="${3:-${SPEAK_VOICE_EN:-af_heart}}"; KLANG="en-us" ;;
+  *)  VOICE="${3:-${SPEAK_VOICE_PT:-pm_santa}}"; KLANG="pt-br" ;;
+esac
+[ -n "$TEXT" ] || exit 0
+
+CACHE="$HOME/.cache/speak"; mkdir -p "$CACHE"
+KEY=$(printf '%s|%s|%s' "$VOICE" "$SPEED" "$TEXT" | shasum | cut -c1-16)
+WAV="$CACHE/$KEY.wav"
+
+if [ ! -s "$WAV" ] && [ -x "$PY" ] && [ -s "$TTS_DIR/models/kokoro-v1.0.onnx" ]; then
+  TEXT="$TEXT" VOICE="$VOICE" KLANG="$KLANG" WAV="$WAV.part" SPEED="$SPEED" TTS_DIR="$TTS_DIR" "$PY" - <<'EOF' 2>/dev/null && mv "$WAV.part" "$WAV"
+import os, soundfile as sf
+from kokoro_onnx import Kokoro
+d = os.path.join(os.environ["TTS_DIR"], "models")
+k = Kokoro(f"{d}/kokoro-v1.0.onnx", f"{d}/voices-v1.0.bin")
+s, sr = k.create(os.environ["TEXT"], voice=os.environ["VOICE"], speed=float(os.environ["SPEED"]), lang=os.environ["KLANG"])
+sf.write(os.environ["WAV"], s, sr, format="WAV", subtype="PCM_16")
+EOF
+  rm -f "$WAV.part"
+fi
+
+if [ -s "$WAV" ]; then
+  if [ -n "$SPEAK_NO_PLAY" ]; then echo "$WAV"; else afplay "$WAV"; fi
+  exit 0
+fi
+
+SYSVOICE=$([ "$LANG_CODE" = en ] && echo Samantha || echo Luciana)
+if [ -n "$SPEAK_NO_PLAY" ]; then
+  TMP=$(mktemp /tmp/speak-fallback.XXXXXX).wav
+  say -v "$SYSVOICE" -o "$TMP" --data-format=LEI16@24000 "$TEXT" && echo "$TMP"; exit
+fi
+say -v "$SYSVOICE" "$TEXT"

@@ -1,15 +1,15 @@
-# Presets de papel no Maestri
+# Role presets in Maestri
 
-Cada preset é só um ponteiro. O texto abaixo é o prompt inteiro do preset; a verdade mora em `roles/`.
+Each preset is only a pointer. The text below is the whole preset prompt; the truth lives in `roles/`.
 
-## Definidor
+## Definidor (Definer)
 
-Leia agora, com a ferramenta Read, o arquivo /Users/henok/Documents/programming/batuta/roles/definidor.md e siga-o como o seu papel nesta sessão. Releia-o depois de qualquer compactação.
+Read now, with the Read tool, the file /Users/henok/Documents/programming/batuta/roles/definer.md and follow it as your role in this session. Reread it after any compaction.
 
-## Orquestrador
+## Orquestrador (Orchestrator)
 
-Leia agora, com a ferramenta Read, o arquivo /Users/henok/Documents/programming/batuta/roles/orquestrador.md e siga-o como o seu papel nesta sessão. Releia-o depois de qualquer compactação.
+Read now, with the Read tool, the file /Users/henok/Documents/programming/batuta/roles/orchestrator.md and follow it as your role in this session. Reread it after any compaction.
 
 ## Executor
 
-Leia agora, com a ferramenta Read, o arquivo /Users/henok/Documents/programming/batuta/roles/executor.md e siga-o como o seu papel nesta sessão. Releia-o depois de qualquer compactação.
+Read now, with the Read tool, the file /Users/henok/Documents/programming/batuta/roles/executor.md and follow it as your role in this session. Reread it after any compaction.

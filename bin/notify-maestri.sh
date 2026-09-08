@@ -1,6 +1,4 @@
 #!/bin/bash
-# Hook de Notification do Claude Code. Dentro do Maestri, a notificação ativa o Maestri ao clicar;
-# fora dele, delega ao hook original do Nori.
 
 NORI_HOOK="/Users/henok/.local/share/fnm/node-versions/v22.22.2/installation/lib/node_modules/nori-skillsets/build/src/cli/features/claude-code/hooks/config/notify-hook.sh"
 MAESTRI_BUNDLE="com.evercraftlabs.Maestro"
@@ -15,7 +13,7 @@ fi
 MESSAGE=$(printf '%s' "$DATA" | python3 -c 'import sys,json
 try: print(json.load(sys.stdin).get("message",""))
 except Exception: pass' 2>/dev/null)
-[ -z "$MESSAGE" ] && MESSAGE="Claude Code precisa de você"
+[ -z "$MESSAGE" ] && MESSAGE="Claude Code needs you"
 
 terminal-notifier \
   -title "Maestri" \
