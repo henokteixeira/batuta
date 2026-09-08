@@ -50,3 +50,12 @@ Skillset `personal/batuta` no lugar do `public/high-autonomy`. Saíram brainstor
 ## Notificação
 
 O hook de Notification do Claude Code aponta para `batuta/bin/notify-maestri.sh`: dentro do Maestri, clicar na notificação abre o Maestri; fora dele, cai no hook do Nori.
+
+## Depois de qualquer `nori-skillsets switch`
+
+O switch reinstala o `settings.json` e apaga de `~/.claude/skills` o que não está no skillset. Conferir e refazer:
+
+1. Hook de Notification apontando para `batuta/bin/notify-maestri.sh`.
+2. Hook PreToolUse `commit-author.js` do Nori removido (ele troca o co-autor por Nori).
+3. `includeCoAuthoredBy: true`, para o co-autor ser o Claude.
+4. Nunca sobrescrever o autor do git: a configuração global é `henokteixeira <henokteixeira@gmail.com>`, que é a conta do GitHub.
