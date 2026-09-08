@@ -2,7 +2,7 @@
 # Hook de Notification do Claude Code. Dentro do Maestri, a notificação ativa o Maestri ao clicar;
 # fora dele, delega ao hook original do Nori.
 
-NORI_HOOK="/Users/henok/.local/share/fnm/node-versions/v22.18.0/installation/lib/node_modules/nori-skillsets/build/src/cli/features/claude-code/hooks/config/notify-hook.sh"
+NORI_HOOK="/Users/henok/.local/share/fnm/node-versions/v22.22.2/installation/lib/node_modules/nori-skillsets/build/src/cli/features/claude-code/hooks/config/notify-hook.sh"
 MAESTRI_BUNDLE="com.evercraftlabs.Maestro"
 
 DATA=$(cat)

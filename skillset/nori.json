@@ -14,6 +14,12 @@
       "grilling": "*",
       "handle-large-tasks": "*",
       "handoff": "*",
+      "maestri": "*",
+      "maestri-manager": "*",
+      "maestri-portal": "*",
+      "maestri-portal-devices": "*",
+      "maestri-routines": "*",
+      "maestri-workspace": "*",
       "receiving-code-review": "*",
       "systematic-debugging": "*",
       "test-driven-development": "*",
@@ -27,7 +33,8 @@
       "using-skills": "*",
       "wayfinder": "*",
       "wizard": "*",
-      "writing-plans": "*"
+      "writing-plans": "*",
+      "cleaning-mac-disk-space": "*"
     },
     "subagents": {
       "nori-code-researcher": "*",
