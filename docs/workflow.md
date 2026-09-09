@@ -10,8 +10,8 @@ Define before dispatching: you and the Definer close the business rule and the d
 
 One workspace for Shema, called **Shema**, rooted at `~/Documents/programming/obt`. In it:
 
-- **Definidor** (the Definer) — the terminal you talk to, and the front door. Everything you want enters here: ideas, defects, small asks with no open decision, findings after a round closed, tickets other people opened that you want worked, and the order of the next round. It defines, and it writes the manifest with you. Fable, high effort.
-- **Orquestrador** (the Orchestrator) — the terminal that runs the round: only the tickets on the manifest, in that order. From you it hears "go", "close the round", "emergency", and your answers to the lines it wrote in `for you`. Fable, high effort while planning. Needs **Maestro Mode on** to recruit executors: toggle it on the terminal the first time.
+- **Definidor** (the Definer) — the terminal you talk to, and the front door. Everything you want enters here: ideas, defects, small asks with no open decision, findings after a round closed, tickets other people opened that you want worked, and the order of the next round. It defines, and it writes the manifest with you. Fable, effort `max`: `claude --effort max`.
+- **Orquestrador** (the Orchestrator) — the terminal that runs the round: only the tickets on the manifest, in that order. From you it hears "go", "close the round", "emergency", and your answers to the lines it wrote in `for you`. Fable, effort `max`, never lower: `claude --effort max`. Needs **Maestro Mode on** to recruit executors: toggle it on the terminal the first time.
 - **voice** — a Shell terminal for the voice kit, wired to the Definer. `bin/setup-canvas`, run in the Orchestrator terminal with Maestro Mode on, creates it, creates and wires the five standing notes, and schedules the three routines. A missing standing note is fixed by rerunning `setup-canvas`, never by creating it by hand.
 - Five standing notes with fixed names: **round** (the manifest; outside a round its body reads `(no round open)`), **board** (one line per slice of the open round, in manifest order: `<codename> · <ticket> · <state> · <model>`; emptied at round close), **for you** (only what is still pending on you), **findings** (what showed up out of scope, one line each), and **how it works** (the short version of this file). The **logs** stack holds `log · <codename>`, `state · <date>` and `definition · <date>`; you almost never open it.
 - Three routines: **morning state** daily at 08:30, **evening round check** daily at 18:30, **for you reminder** on weekdays at noon. They read the round note and the latest state note, report on the board, clean `for you` of what you already answered, and push you the reminder; the evening check also closes the round, but only when every manifest item is merged or waiting Henok. A routine never opens a round and never closes one by the clock.
@@ -39,7 +39,7 @@ Only when you ask. The Definer closes everything you brought and writes the whol
 
 ## Models
 
-Decisions and study on the strongest: Definer and Orchestrator on Fable, high effort. Implementation on the cheapest the ticket allows: estimate 1 or 2 and low risk, sonnet with low effort; 3, sonnet with high effort; 5, high risk or domain rule, opus with high effort. Faithfulness reviewer on opus. Never haiku.
+Decisions and study on the strongest: Definer and Orchestrator on Fable with effort `max`, never lower. Implementation on the cheapest the ticket allows: estimate 1 or 2 and low risk, sonnet with low effort; 3, sonnet with high effort; 5, high risk or domain rule, opus with high effort. Faithfulness reviewer on opus. Never haiku.
 
 ## The voice kit
 

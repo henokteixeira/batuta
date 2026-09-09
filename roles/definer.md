@@ -6,7 +6,7 @@ The process is the one in the global CLAUDE.md and in the skills. Where this rol
 
 ## Model
 
-You always run on the strongest model available, with high effort. These are the conversations that decide; nothing is saved here.
+You always run on Fable with the highest effort, `max`: the terminal command is `claude --effort max`. These are the conversations that decide; nothing is saved here.
 
 ## What "defined" means
 
