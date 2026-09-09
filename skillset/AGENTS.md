@@ -20,7 +20,7 @@
 
 # Tone
 
-Do not be deferential. I am not always right. Flag when you do not know something. Flag bad ideas, unreasonable expectations and mistakes. If you disagree, even on a gut feeling, push back. Stop and ask when a decision is mine.
+Do not be deferential. I am not always right. Flag when you do not know something. Flag bad ideas, unreasonable expectations and mistakes. If you disagree, even on a gut feeling, push back. Stop and ask when a decision is mine. In a Batuta workspace the ask is one line in "for you", written by the agent that talks to me and deleted once I answer; an agent recruited by another agent asks its recruiter.
 <required> Never say "You are absolutely right" or anything equivalent. It is insulting in my culture. </required>
 
 # Independence
@@ -42,10 +42,10 @@ Study and decisions get the strongest model with high effort. Implementation get
 
 # Issue tracker
 
-Linear, team **Engineering** only, via the Linear MCP. Projects vary per request: infer, or list the team's projects and ask once. Estimates use the team's Fibonacci scale: 0 only for parent issues, 1/2/3/5 for leaves, never 8 (split first). Labels: `ready-for-agent` means fully defined (business rule in one sentence, acceptance criterion as a failing test, zero open decisions); `ready-for-human` means only the human can do it. Blocking edges use Linear's native `blockedBy`. A parent and its sub-issues share a project. The record of decisions (questions asked, answers, what was reopened) is posted as a comment on the ticket: it is the only place the why survives the merge.
+Linear, team **Engineering** only, via the Linear MCP. Projects vary per request: infer, or list the team's projects and ask once. Estimates use the team's Fibonacci scale: 0 only for parent issues, 1/2/3/5 for leaves, never 8 (split first). Labels: `ready-for-agent` means fully defined (business rule in one sentence, acceptance criterion as a failing test, zero open decisions), and the Definer applies it, never the Orchestrator; the label does not put a ticket in a round, the manifest does. `ready-for-human` means only the human can do it. A finding becomes a ticket only when a round closes, and only through the Definer. Tickets I did not bring to the Definer are out of scope: never audit the backlog. Blocking edges use Linear's native `blockedBy`. A parent and its sub-issues share a project. The record of decisions (questions asked, answers, what was reopened) is posted as a comment on the ticket: it is the only place the why survives the merge.
 
 # Maestri
 
-The canvas is for the human's eyes, not for agent context. Never use `maestri check` except to diagnose a wedged agent. Diffs do not travel between agents: a reviewer runs `git diff` in the same worktree. Wait for CI with `gh pr checks --watch`, never by polling. Portals and simulators are for the human to look at. Update notes with `maestri note edit` (substring), never `write` over a note another agent shares. Never `maestri dismiss` unless the human asked.
+The canvas is for the human's eyes, not for agent context. Never use `maestri check` except to diagnose a wedged agent. Diffs do not travel between agents: a reviewer runs `git diff` in the same worktree. Wait for CI with `gh pr checks --watch`, never by polling. A green PR waits for the human: no agent merges, and "Review and merge PR #N" is a "for you" line. Portals and simulators are for the human to look at. Update notes with `maestri note edit` (substring), never `write` over a note another agent shares. "for you" holds only what is still pending on the human: delete a line he answered or did, never mark it [x]. Measurements, history and status go to the logs stack, never to "for you". Never `maestri dismiss` unless the human asked.
 
 <include-on-compaction> After a compaction you lose the discipline embedded in skills. Reread every skill in the required block before continuing. </include-on-compaction>
