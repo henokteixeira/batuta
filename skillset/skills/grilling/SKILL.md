@@ -23,9 +23,9 @@ Format a question round like so:
 
 ## How to ask
 
-When the user is at the keyboard in Claude Code, ask the frontier through the AskUserQuestion tool: at most four questions per call, each with two to four options, the recommended option first and marked "(Recommended)". A frontier of more than four questions goes in consecutive calls of the same question round.
+When the user is at the keyboard in Claude Code and you are the terminal he talks to, ask the frontier through the AskUserQuestion tool: at most four questions per call, each with two to four options, the recommended option first and marked "(Recommended)". A frontier of more than four questions goes in consecutive calls of the same question round.
 
-The text format above is the fallback: use it by voice, when writing `~/.cache/grill/<agent>.txt`, and when the asker is an agent talking to another agent.
+The text format above is the fallback: use it by voice, when writing `~/.cache/grill/<agent>.txt`, and when the asker is an agent talking to another agent. An Orchestrator relaying an executor's frontier writes it in the "for you" note and never uses the tool.
 
 Each question round the user answers reshapes the tree: settled decisions push the frontier outward and unblock questions that depended on them. Recompute the frontier and ask the next question round. A question whose answer depends on another question still open in this question round belongs to a _later_ one, not this one.
 

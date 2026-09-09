@@ -12,11 +12,11 @@ _Avoid_: sprint, cycle, iteration, milestone
 
 **Manifest**:
 The ordered list of tickets a round runs, at most three except in a high-autonomy round, written by the Definer with Henok before "go".
-_Avoid_: queue, backlog, plan, to-do list
+_Avoid_: queue, plan, to-do list
 
-**Manifest entry**:
-One line of the manifest: a leaf ticket, or a parent whose unblocked children are its slices. A parent counts as one entry.
-_Avoid_: item, task, story
+**Manifest item**:
+One line of the manifest: a leaf ticket, or a parent whose unblocked children are its slices. A parent counts as one item.
+_Avoid_: entry, task, story
 
 **Slice**:
 What one executor runs: one plan, one worktree, one PR.
@@ -28,7 +28,7 @@ _Avoid_: running, active, in progress, WIP
 
 **Waiting Henok**:
 The state of an item whose next step is Henok's. A line for it exists in "for you", and its slot is free.
-_Avoid_: blocked, blocked on Henok, pending, stuck
+_Avoid_: blocked, blocked on Henok, stuck
 
 **Concurrency limit**:
 At most two slices in flight at once; three only when the third belongs to a ticket that already has a slice in flight.
@@ -77,7 +77,7 @@ The line in "for you" that hands Henok a verified, green PR: "Review and merge P
 _Avoid_: approval, review request, merge task
 
 **Define: line**:
-The line in "for you" that sends a manifest ticket back to the Definer, naming what is missing. The ticket is skipped and resumes in the same round once the Definer has labelled it.
+The line in "for you" that sends a manifest ticket back to the Definer, naming what is missing. The ticket is skipped and resumes in the same round once the Definer has labelled it, or goes to the next manifest if the round closed first.
 _Avoid_: blocker note, clarification, question
 
 ### People and terminals
@@ -115,6 +115,10 @@ _Avoid_: quick fix, tiny task, drive-by
 **Finding**:
 Something an agent noticed that does not belong to the slice it is on. It is one line in the findings note, never a ticket, a label, a plan change or a dispatch in the round it appeared.
 _Avoid_: issue, bug report, side quest, TODO
+
+**Backlog**:
+Every ticket in Linear that nobody brought to the Definer. It is never listed, audited or dispatched.
+_Avoid_: queue, pool, the rest of the tickets
 
 **Production emergency**:
 One of four measured facts, never a judgement: production is down or returning errors to users; production data is being lost or corrupted; a secret or personal data is exposed; money is being spent or charged wrongly.

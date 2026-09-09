@@ -1,6 +1,5 @@
 #!/bin/bash
-# Run inside the Orchestrator terminal of a Batuta workspace, with Maestro Mode on. Rerun it after any change to the note templates or the routine prompts.
-# Rerunnable: creates the standing notes (board, for you, findings, how it works, round) if missing, replaces the old Portuguese note names, refreshes 'how it works' from its template, wires the notes and the voice terminal to the Definer, and creates or refreshes the routines.
+# Run inside the Orchestrator terminal of a Batuta workspace, with Maestro Mode on; rerun after a change to a template or a routine prompt.
 set -u
 B="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 DEFINER="${DEFINER:-Definidor}"
@@ -17,13 +16,14 @@ for old in painel "pra você" achados "como funciona"; do
 done
 
 for n in board "for you" findings "how it works" round; do
-  if have "$n"; then echo "note '$n' already there"; else
+  if ! have "$n"; then
     maestri note create "$(template "$n")" --name "$n" >/dev/null 2>&1 && echo "created note '$n'"
+  elif [ "$n" = "how it works" ]; then
+    maestri note write "$n" "$(template "$n")" >/dev/null 2>&1 && echo "refreshed note '$n'"
+  else
+    echo "note '$n' already there"
   fi
 done
-if have "how it works"; then
-  maestri note write "how it works" "$(template "how it works")" >/dev/null 2>&1 && echo "refreshed note 'how it works'"
-fi
 
 if ! have "voice"; then
   maestri recruit "voice" --preset "Shell" --dir "$HOME" >/dev/null 2>&1 && echo "recruited Shell terminal 'voice'"
