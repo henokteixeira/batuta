@@ -1,6 +1,6 @@
 #!/bin/bash
-# Run once inside the Orchestrator terminal of a Batuta workspace, with Maestro Mode on.
-# Idempotent: creates what is missing, replaces the old Portuguese note names, wires everything, schedules the routines.
+# Run inside the Orchestrator terminal of a Batuta workspace, with Maestro Mode on. Rerun it after any change to the note templates or the routine prompts.
+# Rerunnable: creates the standing notes (board, for you, findings, how it works, round) if missing, replaces the old Portuguese note names, refreshes 'how it works' from its template, wires the notes and the voice terminal to the Definer, and creates or refreshes the routines.
 set -u
 B="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 DEFINER="${DEFINER:-Definidor}"
@@ -10,16 +10,20 @@ if echo "$LIST" | grep -q "maestro: false"; then
 fi
 
 have() { echo "$LIST" | grep -q "name: \"$1\""; }
+template() { cat "$B/templates/notes/$1.md"; }
 
 for old in painel "pra você" achados "como funciona"; do
   if have "$old"; then maestri note delete "$old" >/dev/null 2>&1 && echo "removed note '$old'"; fi
 done
 
-for n in board "for you" findings "how it works"; do
+for n in board "for you" findings "how it works" round; do
   if have "$n"; then echo "note '$n' already there"; else
-    maestri note create "$(cat "$B/templates/notes/$n.md")" --name "$n" >/dev/null 2>&1 && echo "created note '$n'"
+    maestri note create "$(template "$n")" --name "$n" >/dev/null 2>&1 && echo "created note '$n'"
   fi
 done
+if have "how it works"; then
+  maestri note write "how it works" "$(template "how it works")" >/dev/null 2>&1 && echo "refreshed note 'how it works'"
+fi
 
 if ! have "voice"; then
   maestri recruit "voice" --preset "Shell" --dir "$HOME" >/dev/null 2>&1 && echo "recruited Shell terminal 'voice'"
@@ -27,28 +31,34 @@ fi
 
 LIST=$(maestri list 2>&1)
 if echo "$LIST" | grep -q "name: \"$DEFINER\""; then
-  for n in board "for you" findings "how it works" voice; do
+  for n in board "for you" findings "how it works" round voice; do
     maestri connect "$n" "$DEFINER" >/dev/null 2>&1 && echo "wired '$n' <-> '$DEFINER'"
   done
 else
   echo "no terminal named '$DEFINER' is connected to you: wire the Definer to this terminal in the canvas and run again for the ropes"
 fi
 
+MORNING="Start of day. Read the latest 'state ·' note in the logs stack and the 'round' note. If the round note says no round open, write one line in the board, 'no round open, waiting for a manifest', and stop. Otherwise read only the tickets named in the manifest; do not list, search or label anything else in Linear. Delete from 'for you' every line you wrote that Henok already answered or did, after recording his answer on the ticket; keep only what still waits on him. Write three lines in the board: which manifest items are in flight, which wait for Henok, which have not started. Do not dispatch anything: only Henok's 'go' opens a round."
+EVENING="Evening check. If the 'round' note says no round open, or a 'state ·' note already closed it, do nothing. Otherwise check each manifest item: merged, waiting Henok (a line in 'for you' counts), or still in flight. If any item is still in flight, write one line in the board with the status and stop; the round stays open. If every item is merged or waiting Henok, close the round as the role says: decisions on the tickets, each finding marked candidate or discard, the 'state · <today>' note in the logs stack, the round note set back to '(no round open)', and end with TASK_COMPLETE or BLOCKED: waiting on Henok. Do not start new work."
+REMINDER="Batuta: 'for you' holds only what still waits on you: answers, approvals, PRs to review and merge. Anything there?"
+
 ROUTINES=$(maestri routine list 2>&1)
-if ! echo "$ROUTINES" | grep -q "morning state"; then
-  maestri routine create "morning state" --daily 08:30 \
-    --command "Start of day. Read the latest 'state ·' note in the logs stack, list the ready-for-agent tickets with no open blocker in Linear, refresh the board and the for-you notes so they match reality, and write three lines in the board: what is in flight, what waits for Henok, what is ready to start. Do not dispatch anything." \
-    >/dev/null 2>&1 && echo "routine 'morning state' at 08:30"
+scheduled() { echo "$ROUTINES" | grep -q "$1"; }
+routine() {
+  local name=$1 command=$2; shift 2
+  if scheduled "$name"; then
+    maestri routine edit "$name" --command "$command" >/dev/null 2>&1 && echo "routine '$name' refreshed"
+  else
+    maestri routine create "$name" "$@" --command "$command" >/dev/null 2>&1 && echo "routine '$name' created"
+  fi
+}
+
+routine "morning state" "$MORNING" --daily 08:30
+if scheduled "evening handoff" && ! scheduled "evening round check"; then
+  maestri routine edit "evening handoff" --name "evening round check" --command "$EVENING" >/dev/null 2>&1 && echo "routine 'evening handoff' renamed to 'evening round check' and refreshed"
+else
+  routine "evening round check" "$EVENING" --daily 18:30
 fi
-if ! echo "$ROUTINES" | grep -q "evening handoff"; then
-  maestri routine create "evening handoff" --daily 18:30 \
-    --command "End of day. Verify what came back from executors, record decisions on the tickets, turn findings into tickets or discard them, then use the handoff skill to write a 'state · <today>' note in the logs stack. End with TASK_COMPLETE or BLOCKED: waiting on user tasks. Do not start new work." \
-    >/dev/null 2>&1 && echo "routine 'evening handoff' at 18:30"
-fi
-if ! echo "$ROUTINES" | grep -q "for you reminder"; then
-  maestri routine create "for you reminder" --weekly mon,tue,wed,thu,fri@12:00 --reminder \
-    --command "Batuta: anything waiting in the 'for you' note?" \
-    >/dev/null 2>&1 && echo "reminder 'for you reminder' weekdays at 12:00"
-fi
+routine "for you reminder" "$REMINDER" --weekly mon,tue,wed,thu,fri@12:00 --reminder
 
 echo; maestri list; echo; maestri routine list
