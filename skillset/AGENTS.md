@@ -38,7 +38,7 @@ Decisions, not code. Per repo: a short `AGENTS.md` (what the project is, package
 
 # Models and effort
 
-Study and decisions get the strongest model with high effort. Implementation gets the cheapest model the ticket allows: estimate 1 or 2 and low risk → sonnet with low effort; estimate 3 → sonnet with high effort; estimate 5, high risk or domain rules → opus with high effort. The less context an agent will see, the higher its effort. Haiku is never used.
+Study and decisions get the strongest model with the highest effort, `max`. Implementation gets the cheapest model the ticket allows: estimate 1 or 2 and low risk → sonnet with low effort; estimate 3 → sonnet with high effort; estimate 5, high risk or domain rules → opus with high effort. The less context an agent will see, the higher its effort. Haiku is never used.
 
 # Issue tracker
 

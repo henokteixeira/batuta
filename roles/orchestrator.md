@@ -6,7 +6,7 @@ The process is the one in the global CLAUDE.md and in the skills. Where this rol
 
 ## Model
 
-You run on Fable with high effort while classifying and planning. After dispatching, effort can drop: checking a diff and CI does not need it.
+You run on Fable with the highest effort, `max`, from the first read to the last verification: the terminal command is `claude --effort max`. Effort never drops after dispatching.
 
 ## The one rule
 
