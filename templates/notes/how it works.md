@@ -1,27 +1,32 @@
 # how it works
 
-In one sentence: you define with the Definer, the Orchestrator executes, and you only answer what is in "for you".
+In one sentence: you bring everything to the Definer, agree with it a round of at most three tickets, the Orchestrator runs that round and nothing else, and you answer what is in "for you" and merge every PR.
 
 ## Before each round
 
-1. Open the Definer and bring the list: undefined tickets, defects seen in a test, ideas, and the "Define:" lines the Orchestrator left in "for you". It works for what is already in Linear and for what is not a ticket yet.
-2. It grills item by item, one frontier at a time, each question with the recommended answer. Answer by voice. Facts it finds; only decisions come to you.
-3. It updates the glossary, writes an ADR when a decision is hard to reverse, publishes spec and tickets to Linear with blockers, and labels `ready-for-agent` only what has a one-sentence rule, a testable acceptance criterion and zero open decisions.
+1. Open the Definer and bring everything: undefined tickets, defects seen in a test, ideas, small asks with no open decision, findings from the round that just closed, and the order you want them run. Only what you bring enters the flow; nobody audits the backlog or other people's tickets.
+2. It grills item by item, one frontier per question round, each question with the recommended answer. Answer by voice. Facts it finds; only decisions come to you.
+3. It updates the glossary, writes an ADR when a decision is hard to reverse, publishes spec and tickets to Linear with blockers, and labels `ready-for-agent` only what has a one-sentence rule, a testable acceptance criterion and zero open decisions. Only the Definer ever applies that label.
+4. It writes the manifest with you in the `round` note: at most three tickets, in the order they run. That note is the whole of the next round.
 
 ## During the round
 
-4. Tell the Orchestrator to start. It pulls `ready-for-agent` tickets with no blocker, writes the slice plan, creates the worktree, recruits an executor with the ticket's model and dispatches. Three tasks at most, one grilling you at a time.
-5. You only look at "for you". Each line is a closed question or a high-risk approval. Answer there and the line goes away. The board shows progress.
-6. The Orchestrator verifies each PR against the tests and against the spec, waits for CI, records decisions on the ticket and restarts the executor. Visible changes you check in the portal or simulator.
+5. Say "go" to the Orchestrator. It dispatches only the manifest, in that order: writes the slice plan, creates the worktree, recruits an executor with the ticket's model and dispatches. The concurrency limit: at most two slices in flight, a third only when it belongs to a ticket already in flight; one grilling you at a time. It never pulls other `ready-for-agent` tickets, findings, urgent items or anything you mention in passing. A manifest ticket it cannot dispatch gets a `Define:` line in "for you" and is skipped; once the Definer has defined it, it resumes in the same round. The only things you say to the Orchestrator are "go", "close the round", "emergency" and your answers to the lines it wrote in "for you"; anything else gets one line back: take it to the Definer.
+6. You only look at "for you". Each line is a closed question, an approval, a `Define:` to carry to the Definer, something to look at, a script to run, a PR to review and merge, or an emergency to decide. Answer by appending `R: …` to the line, or by voice. Answer it or do it and the line is deleted, never ticked. Measurements and history live in the logs stack; the board shows the round's slices.
+7. The Orchestrator verifies each PR against the tests and against the spec, waits for CI, records decisions on the ticket, writes `Review and merge PR #N` in "for you" and restarts the executor. You merge every PR; no agent merges. Findings wait in "findings" until the round closes. Visible changes you check in the portal or simulator.
 
 ## At the end
 
-7. It writes the state note in the logs stack and ends with TASK_COMPLETE or BLOCKED. Findings become tickets or are discarded.
-8. Clear the context yourself: once the Orchestrator ends with TASK_COMPLETE or BLOCKED, type `/clear` in its terminal; same for the Definer at the end of a definition session, after its `definition · <date>` note. Executors are restarted by the Orchestrator. Never leave it to auto-compact. The next round starts from the state note; the notes are the memory, the session is not.
+8. The round closes when every manifest item is merged or waiting Henok — an open `Review and merge PR #N` line counts — or when you say "close the round". The Orchestrator records the decisions, marks each finding `⇒ candidate` or `⇒ recommend discard`, writes the `state · <date>` note in the logs stack, empties the board, sets the `round` note back to `(no round open)` and ends with TASK_COMPLETE or BLOCKED: waiting on Henok. After that note it answers questions and does post-merge bookkeeping; it dispatches nothing, however small and whoever asks.
+9. Clear the context yourself: type `/clear` in the Orchestrator after the state note and not before; same for the Definer after its `definition · <date>` note and the next manifest. Executors are restarted by the Orchestrator. Never leave it to auto-compact. The next round starts from a new manifest, then `/clear` and "go"; the notes are the memory, the session is not.
 
-## High parallelism
+## Mid-round asks and emergencies
 
-Ask the Definer for a high-autonomy round. It closes the whole queue first and writes `mode: high autonomy` on the board. The Orchestrator fires the whole frontier at once and deletes the line when it closes. Never the default.
+Anything new mid-round goes to the Definer and waits for the next manifest; it never joins the round already running. A production emergency is one of four measured facts — production down or returning errors, data lost or corrupted, a secret or personal data exposed, money spent or charged wrongly — and reaches you as one line in "for you" with a recommendation. You decide. If you open it, the Definer defines the ticket in one exchange and appends it to the manifest, you say "emergency" to the Orchestrator, and that slice runs next. Anything else that looks urgent is a finding.
+
+## High autonomy
+
+Ask the Definer for a high-autonomy round. It closes everything you brought and writes the whole frontier into the `round` note, with `mode: high autonomy` under the date. For that round only, the three-ticket cap and the concurrency limit are suspended: the Orchestrator fires the manifest at once. The note goes back to `(no round open)` at close. Never the default.
 
 ## Voice
 
