@@ -73,7 +73,7 @@ golangci-lint run --fix
 git push -u origin <feature-branch>
 
 # Create PR
-gh pr create --title "<title>" --body "$(cat <<'EOF'
+gh pr create --assignee @me --title "<title>" --body "$(cat <<'EOF'
 ## Summary
 🤖 Generated with [Nori](https://noriagentic.com/)
 

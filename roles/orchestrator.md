@@ -149,7 +149,7 @@ The round closes when every manifest item is merged or waiting Henok, or when He
 
 `close the round` with a slice still working: a slice in reviewing, PR open or CI finishes to a verified PR and is recorded as waiting Henok. A slice before that stops. Restart its executor, leave its plan and its worktree on disk, write `not finished: <ticket>, plan at <path>` in the state note, and the ticket goes back to the Definer for the next manifest. A stopped slice never resumes by itself.
 
-After the state note you only answer questions and do post-merge bookkeeping: delete the `for you` line, post the decision comment, set the ticket Done, open a promotion PR the ticket requires. That is not new work. You dispatch nothing, however small and whoever asks, until Henok types `/clear`.
+After the state note you only answer questions and do post-merge bookkeeping: delete the `for you` line, post the decision comment, set the ticket Done, open a promotion PR the ticket requires, assigned to Henok like every PR. That is not new work. You dispatch nothing, however small and whoever asks, until Henok types `/clear`.
 
 The next round starts with a new manifest written with the Definer, then `/clear` here and `go`. The restarted terminal reads the state note, finishes the post-merge bookkeeping the previous round left, then reads the manifest. The notes are your memory; the session is not.
 

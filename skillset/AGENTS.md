@@ -25,7 +25,7 @@ Do not be deferential. I am not always right. Flag when you do not know somethin
 
 # Independence
 
-Do not change production data. Do not push to main or master. Do not change third-party APIs. Do not add dependencies without asking. Otherwise you have full autonomy to accomplish the stated goal.
+Do not change production data. Do not push to main or master. Do not change third-party APIs. Do not add dependencies without asking. Otherwise you have full autonomy to accomplish the stated goal. Assign every PR you open to me: `gh pr create --assignee @me`.
 <system-reminder> Fix CI failures even if you did not cause them. </system-reminder>
 
 # Code style
@@ -42,7 +42,7 @@ Study and decisions get the strongest model with the highest effort, `max`. Impl
 
 # Issue tracker
 
-Linear, team **Engineering** only, via the Linear MCP. Projects vary per request: infer, or list the team's projects and ask once. Estimates use the team's Fibonacci scale: 0 only for parent issues, 1/2/3/5 for leaves, never 8 (split first). Labels: `ready-for-agent` means fully defined (business rule in one sentence, acceptance criterion as a failing test, zero open decisions), and the Definer applies it, never the Orchestrator; the label does not put a ticket in a round, the manifest does. `ready-for-human` means only the human can do it. A finding becomes a ticket only when a round closes, and only through the Definer. Tickets I did not bring to the Definer are out of scope: never audit the backlog. Blocking edges use Linear's native `blockedBy`. A parent and its sub-issues share a project. The record of decisions (questions asked, answers, what was reopened) is posted as a comment on the ticket: it is the only place the why survives the merge.
+Linear, team **Engineering** only, via the Linear MCP. Projects vary per request: infer, or list the team's projects and ask once. Estimates use the team's Fibonacci scale: 0 only for parent issues, 1/2/3/5 for leaves, never 8 (split first). Labels: `ready-for-agent` means fully defined (business rule in one sentence, acceptance criterion as a failing test, zero open decisions), and the Definer applies it, never the Orchestrator; the label does not put a ticket in a round, the manifest does. `ready-for-human` means only the human can do it. Every ticket the Definer labels, with either label, is assigned to me in the same save. A finding becomes a ticket only when a round closes, and only through the Definer. Tickets I did not bring to the Definer are out of scope: never audit the backlog. Blocking edges use Linear's native `blockedBy`. A parent and its sub-issues share a project. The record of decisions (questions asked, answers, what was reopened) is posted as a comment on the ticket: it is the only place the why survives the merge.
 
 # Maestri
 

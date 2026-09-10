@@ -37,7 +37,7 @@ Enumerating the paths is mandatory: before closing the contract, list the code p
 7. **Hygiene:** `test-scenario-hygiene` over what you added.
 8. **Decision recorded, not code documented:** an ADR if the decision is hard to reverse, `CONTEXT.md` if you created or changed a term, `AGENTS.md` if a command changed. Never write per-folder or implementation documentation.
 9. **Review:** run `nori-code-reviewer` with the spec and the ticket in the prompt, on both axes, standards and faithfulness to the spec. Fix what is a concrete defect in the code this plan changed; a defect elsewhere is a finding for the report, not a fix in this diff.
-10. **Finish:** `finishing-a-development-branch`. Small scoped commits, push with upstream, PR against the plan's target branch, with the ticket identifier in the branch name and never in the commit bodies. Do not merge it. Henok merges every PR himself; yours waits for him.
+10. **Finish:** `finishing-a-development-branch`. Small scoped commits, push with upstream, PR against the plan's target branch, assigned to Henok, with the ticket identifier in the branch name and never in the commit bodies. Do not merge it. Henok merges every PR himself; yours waits for him.
 11. **CI.** Red on your PR is yours, even if your slice did not cause it: fix it inside this PR. Red that needs its own ticket is not yours to fix: one line in the report as a finding, and say so to the Orchestrator.
 
 ## Code style
