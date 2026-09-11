@@ -65,7 +65,7 @@ The standing note holding only what is still pending on Henok, one plain bullet 
 _Avoid_: inbox, to-do, blockers, action items
 
 **Findings**:
-The standing note where each finding is one line. It only grows during a round; every line is marked at round close.
+The standing note where each finding is one line. It only grows during a round, every line is marked at round close, and the Definer empties it with Henok after.
 _Avoid_: issues note, bug list, parking lot
 
 **How it works**:
@@ -117,7 +117,7 @@ Something Henok wants that carries no open decision. The Definer closes it in on
 _Avoid_: quick fix, tiny task, drive-by
 
 **Finding**:
-Something an agent noticed that does not belong to the slice it is on. It is one line in the findings note, never a ticket, a label, a plan change or a dispatch in the round it appeared. A defect on a code path the slice's plan enumerates is not a finding: it is the slice's to fix.
+Something an agent noticed that does not belong to the slice it is on: one line in the findings note until the round closes, never a ticket, a label, a plan change or a dispatch before that. A defect on a code path the slice's plan enumerates is not a finding: it is the slice's to fix.
 _Avoid_: issue, bug report, side quest, TODO
 
 **Backlog**:

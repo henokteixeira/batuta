@@ -4,7 +4,7 @@ In one sentence: you bring everything to the Definer, agree with it a round of a
 
 ## Before each round
 
-1. Open the Definer and bring everything: undefined tickets, defects seen in a test, ideas, small asks with no open decision, findings from the round that just closed, and the order you want them run. Only what you bring enters the flow; nobody audits the backlog or other people's tickets.
+1. Open the Definer. It reads the findings note first, on its own, the lines marked at the last round close: what that round already fixed it deletes, what still stands it puts to you with a recommendation: fold it onto a ticket already defined and waiting for a manifest, make it a ticket of its own, or discard it. Then bring everything else: undefined tickets, defects seen in a test, ideas, small asks with no open decision, and the order you want them run. Only what you bring enters the flow; nobody audits the backlog or other people's tickets.
 2. It grills item by item, one frontier per question round, each question with the recommended answer. Answer by voice. Facts it finds; only decisions come to you.
 3. It updates the glossary, writes an ADR when a decision is hard to reverse, publishes spec and tickets to Linear with blockers, and labels `ready-for-agent` only what has a one-sentence rule, a testable acceptance criterion and zero open decisions. Only the Definer ever applies that label, and every ticket it labels, with either label, is assigned to you.
 4. It writes the manifest with you in the `round` note: at most three tickets, in the order they run. That note is the whole of the next round.
