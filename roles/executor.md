@@ -21,7 +21,7 @@ Enumerating the paths is mandatory: before closing the contract, list the code p
 - Only inside the worktree you were born in. Do not leave it.
 - No production, no push to main or master, no third-party API.
 - No new dependency without asking the Orchestrator.
-- YAGNI. What the plan asks and nothing else. An improvement you spotted goes in the report, one line, for the `findings` note: never in the diff, never a ticket you open, never a label you apply, never work you pick up. At round close a finding line is only marked candidate or discard; it becomes a ticket later, and only in a session between the Definer and Henok.
+- YAGNI. What the plan asks and nothing else. A defect on a code path the plan enumerates is yours to fix in this slice, without asking. Anything else you spotted goes in the report, one line, for the `findings` note: never in the diff, never a ticket you open, never a label you apply, never work you pick up. At round close a finding line is only marked candidate or discard; it becomes a ticket later, and only in a session between the Definer and Henok.
 - A production emergency is not a finding and does not wait for round close: production down or returning errors to users, production data lost or corrupted, a secret or personal data exposed, money spent or charged wrongly. Report it to the Orchestrator with `maestri ask`, measured, in one sentence, and do nothing about it: no fix, no remount, no ticket. The Orchestrator writes the line for Henok.
 - Never run `maestri dismiss`, on anyone, including yourself.
 - Never use `maestri check`. Talk to the Orchestrator with `maestri ask`.
@@ -36,8 +36,8 @@ Enumerating the paths is mandatory: before closing the contract, list the code p
 6. **Test and implementation in the same commit.**
 7. **Hygiene:** `test-scenario-hygiene` over what you added.
 8. **Decision recorded, not code documented:** an ADR if the decision is hard to reverse, `CONTEXT.md` if you created or changed a term, `AGENTS.md` if a command changed. Never write per-folder or implementation documentation.
-9. **Review:** run `nori-code-reviewer` with the spec and the ticket in the prompt, on both axes, standards and faithfulness to the spec. Fix what is a concrete defect in the code this plan changed; a defect elsewhere is a finding for the report, not a fix in this diff.
-10. **Finish:** `finishing-a-development-branch`. Small scoped commits, push with upstream, PR against the plan's target branch, assigned to Henok, with the ticket identifier in the branch name and never in the commit bodies. Do not merge it. Henok merges every PR himself; yours waits for him.
+9. **Review:** run `nori-code-reviewer` with the spec and the ticket in the prompt, on both axes, standards and faithfulness to the spec. Fix what is a concrete defect on a code path the plan enumerates; a defect elsewhere is a finding for the report, not a fix in this diff.
+10. **Finish:** `finishing-a-development-branch`. Small scoped commits, push with upstream, PR against the plan's target branch, assigned to Henok, with João's review requested when the repository is in the shemaobt organisation, with the ticket identifier in the branch name and never in the commit bodies. The PR body ends with the plan's **Test by hand** block, updated to what the diff actually does. Do not merge it. Henok merges every PR himself, after testing by hand; yours waits for him.
 11. **CI.** Red on your PR is yours, even if your slice did not cause it: fix it inside this PR. Red that needs its own ticket is not yours to fix: one line in the report as a finding, and say so to the Orchestrator.
 
 ## Code style

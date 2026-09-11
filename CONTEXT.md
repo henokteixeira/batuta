@@ -1,6 +1,6 @@
 # Batuta
 
-Batuta is Henok's workflow for agents on a Maestri canvas: how work is defined, batched into a round, dispatched, and merged. These are its words; the roles, the templates, the plans, the tickets and the commits use no others.
+Batuta is Henok's workflow for agents on a Maestri canvas: how work is defined, batched into a round, dispatched, and merged. These are its words; the roles, the templates, the plans, the tickets and the commits use no others. Linear's own state names (Todo, In Progress, In Review, Done) stay as Linear writes them.
 
 ## Language
 
@@ -73,12 +73,16 @@ The standing note that carries the rules of the workflow on the canvas, so the c
 _Avoid_: readme note, instructions, cheatsheet
 
 **Review and merge line**:
-The line in "for you" that hands Henok a verified, green PR: "Review and merge PR #N — <ticket> (unblocks: …)"; the Definer's glossary PR writes "glossary" in place of the ticket.
+The line in "for you" that hands Henok a verified, green PR: "Review and merge PR #N — <ticket> (unblocks: …)"; the Definer's glossary PR writes "glossary" in place of the ticket. Henok answers it by merging, or with "R: changes: <what>", which re-dispatches the slice from its plan.
 _Avoid_: approval, review request, merge task
 
 **Define: line**:
 The line in "for you" that sends a manifest ticket back to the Definer, naming what is missing. The ticket is skipped and resumes in the same round once the Definer has labelled it, or goes to the next manifest if the round closed first.
 _Avoid_: blocker note, clarification, question
+
+**Test by hand**:
+The block that closes a slice plan and the PR body: what Henok does to see the change working and what he must see, or why there is nothing to test by hand.
+_Avoid_: manual test, QA, smoke test, Look line
 
 ### People and terminals
 
@@ -113,7 +117,7 @@ Something Henok wants that carries no open decision. The Definer closes it in on
 _Avoid_: quick fix, tiny task, drive-by
 
 **Finding**:
-Something an agent noticed that does not belong to the slice it is on. It is one line in the findings note, never a ticket, a label, a plan change or a dispatch in the round it appeared.
+Something an agent noticed that does not belong to the slice it is on. It is one line in the findings note, never a ticket, a label, a plan change or a dispatch in the round it appeared. A defect on a code path the slice's plan enumerates is not a finding: it is the slice's to fix.
 _Avoid_: issue, bug report, side quest, TODO
 
 **Backlog**:

@@ -25,7 +25,7 @@ Do not be deferential. I am not always right. Flag when you do not know somethin
 
 # Independence
 
-Do not change production data. Do not push to main or master. Do not change third-party APIs. Do not add dependencies without asking. Otherwise you have full autonomy to accomplish the stated goal. Assign every PR you open to me: `gh pr create --assignee @me`.
+Do not change production data. Do not push to main or master. Do not change third-party APIs. Do not add dependencies without asking. Otherwise you have full autonomy to accomplish the stated goal. Assign every PR you open to me, and in the shemaobt organisation request João's review too: `gh pr create --assignee @me --reviewer joaocarvoli`.
 <system-reminder> Fix CI failures even if you did not cause them. </system-reminder>
 
 # Code style
@@ -46,6 +46,6 @@ Linear, team **Engineering** only, via the Linear MCP. Projects vary per request
 
 # Maestri
 
-The canvas is for the human's eyes, not for agent context. Never use `maestri check` except to diagnose a wedged agent. Diffs do not travel between agents: a reviewer runs `git diff` in the same worktree. Wait for CI with `gh pr checks --watch`, never by polling. A green PR waits for the human: no agent merges, and "Review and merge PR #N" is a "for you" line. Portals and simulators are for the human to look at. Update notes with `maestri note edit` (substring), never `write` over a note another agent shares. "for you" holds only what is still pending on the human: delete a line he answered or did, never mark it [x]. Measurements, history and status go to the logs stack, never to "for you". Never `maestri dismiss` unless the human asked.
+The canvas is for the human's eyes, not for agent context. Never use `maestri check` except to diagnose a wedged agent. Diffs do not travel between agents: a reviewer runs `git diff` in the same worktree. Wait for CI with `gh pr checks --watch`, never by polling. A green PR waits for the human, with the Orchestrator's review posted on the PR and the ticket In Review: no agent merges, and "Review and merge PR #N" is a "for you" line. Portals and simulators are for the human to look at. Update notes with `maestri note edit` (substring), never `write` over a note another agent shares. "for you" holds only what is still pending on the human: delete a line he answered or did, never mark it [x]. Measurements, history and status go to the logs stack, never to "for you". Never `maestri dismiss` unless the human asked.
 
 <include-on-compaction> After a compaction you lose the discipline embedded in skills. Reread every skill in the required block before continuing. </include-on-compaction>
