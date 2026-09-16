@@ -12,7 +12,6 @@ The conductor's baton. This repository holds Henok's workflow for agents inside 
 - `bin/` — scripts:
   - `setup-canvas` — creates and wires the five standing notes and installs the routines. Rerun it in the Orchestrator terminal after any change to a routine prompt or to the `how it works` template: it recreates what is missing and refreshes those; the other notes hold live content and are never overwritten.
   - `notify-maestri.sh` — Claude Code Notification hook that opens Maestri on click instead of Terminal.
-  - `speak`, `listen`, `grill-voice` — the voice kit: local text-to-speech (Kokoro), local speech-to-text (whisper.cpp), and a terminal that speaks a frontier of questions, records each answer while Space is held, transcribes it, and sends everything back to the agent. Adapted from João's "Grelha por Voz".
 - `templates/` — initial content of the canvas notes and the preset text.
 - `docs/workflow.md` — how a round runs, from the manifest to Henok's merge and the state note.
 - `docs/adr/` — the decisions that shaped the workflow. Read them before changing a role.
@@ -34,7 +33,6 @@ Details in `docs/workflow.md` and in the roles.
 git clone git@github.com:henokteixeira/batuta.git ~/Documents/programming/batuta
 nori-skillsets link ~/Documents/programming/batuta/skillset --name batuta
 nori-skillsets switch personal/batuta
-ln -sf ~/Documents/programming/batuta/bin/{speak,listen,grill-voice} ~/bin/
 ```
 
-Then, in Maestri, create the three roles with the text in `templates/presets.md`. With the roles in place, run `bin/setup-canvas` in the Orchestrator terminal, with Maestro Mode on: it creates and wires the five standing notes and installs the routines. Point the Notification hook in `~/.claude/settings.json` to `bin/notify-maestri.sh`. The voice kit needs `brew install ffmpeg whisper-cpp`, the whisper model in `~/.cache/whisper-cpp/ggml-large-v3-turbo.bin`, and a Kokoro venv in `~/Library/Application Support/batuta-tts/` (see `docs/workflow.md`).
+Then, in Maestri, create the three roles with the text in `templates/presets.md`. With the roles in place, run `bin/setup-canvas` in the Orchestrator terminal, with Maestro Mode on: it creates and wires the five standing notes and installs the routines. Point the Notification hook in `~/.claude/settings.json` to `bin/notify-maestri.sh`.

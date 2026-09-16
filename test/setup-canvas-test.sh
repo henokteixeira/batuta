@@ -37,8 +37,7 @@ NOTES='Notes:
   - name: "for you"
   - name: "findings"
   - name: "how it works"
-  - name: "round"
-  - name: "voice"'
+  - name: "round"'
 OLD='Notes:
   - name: "painel"
   - name: "pra você"
@@ -56,21 +55,23 @@ for n in board "for you" findings "how it works" round; do
   check "creates note '$n' from its template" "$(line "note ⟨ create ⟨ $(flat "$ROOT/templates/notes/$n.md") ⟨ --name ⟨ $n ⟨ ")" 1
   check "wires '$n' to the Definer" "$(line "connect ⟨ $n ⟨ Definidor ⟨ ")" 1
 done
-check "recruits the voice terminal" "$(calls "^recruit ⟨ voice ⟨ ")" 1
-check "wires voice to the Definer" "$(line "connect ⟨ voice ⟨ Definidor ⟨ ")" 1
+check "recruits no terminal" "$(calls "^recruit ⟨ ")" 0
+check "wires nothing but the five notes" "$(calls "^connect ⟨ ")" 5
 for r in "morning state" "evening round check" "for you reminder"; do
   check "creates routine '$r'" "$(calls "^routine ⟨ create ⟨ $r ⟨ ")" 1
 done
 check "edits no routine" "$(calls "^routine ⟨ edit ⟨ ")" 0
 
-echo "# populated workspace with the old evening routine name"
+echo "# populated workspace with the old evening routine name and a leftover voice terminal"
 rc=$(run "$MAESTRO
+  - name: \"voice\"
 $NOTES" "morning state
 evening handoff
 for you reminder")
 check "exits 0" "$rc" 0
 check "creates no note" "$(calls "^note ⟨ create ⟨ ")" 0
 check "deletes no note" "$(calls "^note ⟨ delete ⟨ ")" 0
+check "leaves a leftover voice terminal alone" "$(calls "^connect ⟨ voice ⟨ ")" 0
 check "rewrites 'how it works' from its template" "$(line "note ⟨ write ⟨ how it works ⟨ $(flat "$ROOT/templates/notes/how it works.md") ⟨ ")" 1
 check "rewrites nothing else" "$(calls "^note ⟨ write ⟨ ")" 1
 check "creates no routine" "$(calls "^routine ⟨ create ⟨ ")" 0

@@ -106,10 +106,6 @@ _Avoid_: worker, implementer, dev agent
 One frontier of grilling questions, each with its recommended answer first: at most four to a call, the rest in the calls that follow.
 _Avoid_: round (that is the batch of work), interview, Q&A session
 
-**Voice session**:
-One grill-voice run: the frontier spoken, each answer recorded and transcribed.
-_Avoid_: voice round, voice call
-
 ### Work items
 
 **Small ask**:

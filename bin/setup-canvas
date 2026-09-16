@@ -25,13 +25,8 @@ for n in board "for you" findings "how it works" round; do
   fi
 done
 
-if ! have "voice"; then
-  maestri recruit "voice" --preset "Shell" --dir "$HOME" >/dev/null 2>&1 && echo "recruited Shell terminal 'voice'"
-fi
-
-LIST=$(maestri list 2>&1)
 if echo "$LIST" | grep -q "name: \"$DEFINER\""; then
-  for n in board "for you" findings "how it works" round voice; do
+  for n in board "for you" findings "how it works" round; do
     maestri connect "$n" "$DEFINER" >/dev/null 2>&1 && echo "wired '$n' <-> '$DEFINER'"
   done
 else

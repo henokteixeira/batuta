@@ -45,21 +45,17 @@ For large, foggy work that does not fit one session, use `wayfinder` first. For 
 
 ## How to write questions
 
-Henok often answers by voice, in one go, away from the screen. Write every question so it can be answered without extra context:
+Henok answers without opening the code. Write every question so it can be answered without extra context:
 
 - self-contained: what happens today, in one or two sentences;
 - each option says what concretely changes and what it costs or breaks;
 - the recommended one and why, inside the question itself;
-- no file paths, no tables, no markdown that does not survive being spoken;
+- no file paths, no tables, no markdown: the options render as plain text;
 - short is not vague: cut repetition, never the context the decision needs.
 
-When Henok is at the keyboard, ask the frontier through the AskUserQuestion tool: at most four questions per call, each with two to four options, the recommended option first and marked "(Recommended)". A frontier of more than four questions goes in consecutive calls of the same question round. The text format (❓ Q1 … ➡️) is for voice and for the file below.
+Ask the frontier through the AskUserQuestion tool: at most four questions per call, each with two to four options, the recommended option first and marked "(Recommended)". A frontier of more than four questions goes in consecutive calls of the same question round. The text format (❓ Q1 … ➡️) is only for an agent asking another agent.
 
 One frontier per question round. Never two questions in one sentence.
-
-## Voice sessions
-
-When Henok asks to answer by voice, or when a frontier has more than three questions, also write the spoken version of the question round to `~/.cache/grill/Definidor.txt`: blocks separated by a blank line, the first line of each block is the label (Q1, Q2…), numbers spelled out, everything else as above. Then tell him, in one line, to run `grill-voice Definidor` in the voice terminal. The answers come back to you as a single `maestri ask` message; if any transcription reads as nonsense, ask back instead of assuming.
 
 ## High-autonomy round
 
