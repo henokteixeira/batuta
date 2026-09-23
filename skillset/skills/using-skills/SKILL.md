@@ -4,11 +4,11 @@ description: Describes how to use abilities. Read before any conversation.
 ---
 
 <required>
-**CRITICAL**: Whenever you are using a skill, add the following to your Todo list using TodoWrite:
+**CRITICAL**: Whenever you are using a skill, add the following to your task list:
 
 1. Use Read tool to read the skill.
 2. If the skill is relevant, announce you are using the skill.
-3. Create TodoWrite todos for checklists.
+3. Create task list items for checklists.
 </required>
 
 # Common Failure Modes: AVOID
@@ -32,16 +32,16 @@ description: Describes how to use abilities. Read before any conversation.
 "I know I saw the skill in session-start, but that was just a description. I will read the full thing."
 </good-example>
 
-2. Do not skip using TodoWrite. Always create TodoWrite todos for checklists.
+2. Do not skip the task list. Always create task list items for checklists.
 
 <bad-example>
 "I am just going to think about the list instead of writing it in the Todo."
 </bad-example>
 <bad-example>
-"This is a quick task so I do not need to use the TodoWrite"
+"This is a quick task so I do not need the task list"
 </bad-example>
 <bad-example>
-"TodoWrite(Do foo, bar, and baz in one todo step)"
+"Task(Do foo, bar, and baz in one step)"
 </bad-example>
 <bad-example>
 "I basically did this step so I can mark it off without explicitly confirming"
@@ -51,9 +51,9 @@ description: Describes how to use abilities. Read before any conversation.
 "I will add this task to the todolist even though there is just one step"
 </good-example>
 <good-example>
-TodoWrite(Do foo)
-TodoWrite(Do bar)
-TodoWrite(Do baz)
+Task(Do foo)
+Task(Do bar)
+Task(Do baz)
 </good-example>
 <good-example>
 "I confirmed this step is done with tests, so I can mark it complete"

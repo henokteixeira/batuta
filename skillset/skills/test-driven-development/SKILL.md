@@ -4,7 +4,7 @@ description: Use when implementing any feature or bugfix, before writing impleme
 ---
 
 <required>
-*CRITICAL* Add the following steps to your Todo list using TodoWrite:
+*CRITICAL* Add the following steps to your task list:
 
 1. Write failing tests (RED phase)
 

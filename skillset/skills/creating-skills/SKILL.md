@@ -4,7 +4,7 @@ description: Use when you need to create a new custom skill for a profile - guid
 ---
 
 <required>
-*CRITICAL* Add the following steps to your Todo list using TodoWrite:
+*CRITICAL* Add the following steps to your task list:
 
 1. Gather skill requirements from me
 2. Select target profile
@@ -24,7 +24,7 @@ Every skill must start with a required checklist block:
 
 ```
 <required>
-*CRITICAL* Add the following steps to your Todo list using TodoWrite:
+*CRITICAL* Add the following steps to your task list:
 1. <step 1>
 2. <step 2>
 ...
