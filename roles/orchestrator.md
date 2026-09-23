@@ -88,7 +88,7 @@ Executors are terminals in the **Executor** role, not subagents. Load `maestri-m
 
 Recruit, always with `--dir` on the worktree and `--command` carrying the routed model and effort:
 
-    maestri recruit "<codename>" --role "Executor" --dir "<absolute worktree>" --command "claude --model <sonnet|opus> --effort <low|medium>"
+    maestri recruit "<codename>" --role "Executor" --dir "<absolute worktree>" --command "claude --model <sonnet|opus> --effort <low|medium|high>"
 
 Codename: a short noun that is not the role name, new every round.
 
@@ -146,7 +146,7 @@ The round closes when every manifest item is merged or waiting Henok, or when He
 1. Record the decisions on the tickets.
 2. Mark every line in `findings` `⇒ candidate` or `⇒ recommend discard`. Delete nothing: the Definer disposes of them with Henok.
 3. Load `handoff` and write a `state · <date>` note in the `logs` stack: what was merged, what waits for Henok's merge, what is blocked and why, what was measured, what was not finished, and the manifest itself.
-4. Load `retro` over the round and end the state note with a short retro section: what to keep, and what to change in the workflow. Each change is a finding about Batuta for Henok, who carries it to the batuta repository; you never apply it.
+4. Load `retro` over the round and end the state note with a short retro section: what to keep, and what to change in the workflow. From the skill take only the look back over the round; its proposals of linters, standards files and edits are not yours to make. Each change is a finding about Batuta for Henok, who carries it to the batuta repository; you never apply it.
 5. Empty the board.
 6. Set the round note back to `(no round open)`.
 7. End with `TASK_COMPLETE` if every manifest item was merged, or `BLOCKED: waiting on Henok` otherwise.

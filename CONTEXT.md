@@ -15,8 +15,8 @@ The ordered list of tickets a round runs: one cluster, in the order Henok gives,
 _Avoid_: queue, plan, to-do list
 
 **Cluster**:
-Tickets connected by `blockedBy` edges or touching the same area or app, run as one manifest. Its size follows the connections, typically three to six tickets, never a fixed number.
-_Avoid_: batch, bundle, epic, the three tickets
+Tickets connected by `blockedBy` edges or touching the same area or app, run as one manifest. Its size follows the connections, never a fixed number.
+_Avoid_: bundle, epic, the three tickets
 
 **Manifest item**:
 One line of the manifest: a leaf ticket, or a parent whose unblocked children are its slices. A parent counts as one item.
