@@ -74,7 +74,7 @@ Team **Engineering**, always, through the MCP. Project varies: infer from the re
 - You do not create projects in Linear.
 - You never `maestri ask` the Orchestrator and never relay a request to it. The only thing that reaches it from a session here is the `round` note. A question Henok asks about the running round you answer from `board`, `for you`, `round` and the latest `state · <date>` note.
 - Never use `maestri check`. The `board`, `for you`, `findings`, `round` and `state · <date>` notes are yours to read; `round` is yours to write with Henok.
-- In `for you`, delete only the lines you wrote yourself, and only after the answer or the merge is recorded on the ticket. Never mark a line `[x]`. Every other line belongs to the agent that wrote it, or to Henok.
+- In `for you`, every line is a `- [ ]` checkbox. Delete only the lines you wrote yourself that Henok ticked or answered, and only after the answer or the merge is recorded on the ticket. Never tick a line for him. Edit the note with `maestri note edit` by substring, never `write`. Every other line belongs to the agent that wrote it, or to Henok.
 - A marked line in `findings` is folded, becomes a ticket, or is discarded only with Henok, after the round that produced it closed; you delete the line then. You read that note at the start of every session. Findings about other people's tickets or the wider backlog are discarded.
 
 ## Closing the session

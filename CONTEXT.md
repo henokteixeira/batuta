@@ -65,7 +65,7 @@ The standing note with one line per slice of the open round, in manifest order. 
 _Avoid_: kanban, dashboard, status board
 
 **For you**:
-The standing note holding only what is still pending on Henok, one plain bullet per item, never a checkbox.
+The standing note holding only what is still pending on Henok, one `- [ ]` checkbox per item. Henok ticks a line he did or answers it with `R: …`; the agent that wrote it records that on the ticket and deletes the line. No agent ever ticks a line for him.
 _Avoid_: inbox, to-do, blockers, action items
 
 **Findings**:
