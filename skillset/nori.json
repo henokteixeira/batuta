@@ -20,7 +20,9 @@
       "maestri-portal-devices": "*",
       "maestri-routines": "*",
       "maestri-workspace": "*",
+      "prototype": "*",
       "receiving-code-review": "*",
+      "retro": "*",
       "systematic-debugging": "*",
       "test-driven-development": "*",
       "test-scenario-hygiene": "*",
@@ -33,6 +35,7 @@
       "using-skills": "*",
       "wayfinder": "*",
       "wizard": "*",
+      "writing-for-agents": "*",
       "writing-plans": "*",
       "cleaning-mac-disk-space": "*"
     },

@@ -53,8 +53,8 @@ The standing note named "round" that holds the manifest of the open round. Outsi
 _Avoid_: manifest note, dated round note, the round file
 
 **State note**:
-The "state · <date>" note written in the logs stack when a round closes: what merged, what waits Henok, what is blocked and why, what was measured, what did not finish, and the manifest itself.
-_Avoid_: handoff, report, summary, retro
+The "state · <date>" note written in the logs stack when a round closes: what merged, what waits Henok, what is blocked and why, what was measured, what did not finish, the manifest itself, and a short retro: what to keep and what to change in the workflow.
+_Avoid_: handoff, report, summary
 
 **Logs stack**:
 The stack of notes that holds "log · <codename>", "state · <date>" and "definition · <date>". Measurements, history and status live there and nowhere else.
