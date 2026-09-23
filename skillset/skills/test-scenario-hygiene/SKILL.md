@@ -4,7 +4,7 @@ description: Use after TDD is finished, to review and clean the testing addition
 ---
 
 <required>
-*CRITICAL* Add the following steps to your Todo list using TodoWrite:
+*CRITICAL* Add the following steps to your task list:
 
 1. Review git changes to find test scenarios added this session
 2. Use Task tool with general-purpose subagent to categorize tests

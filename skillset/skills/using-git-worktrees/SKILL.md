@@ -4,7 +4,7 @@ description: Use this whenever you need to create an isolated workspace. Optiona
 ---
 
 <required>
-*CRITICAL* Add the following steps to your Todo list using TodoWrite:
+*CRITICAL* Add the following steps to your task list:
 
 1. Find the worktrees directory.
 

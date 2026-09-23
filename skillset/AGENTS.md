@@ -1,5 +1,5 @@
 <required>
-- *CRITICAL* Add each element of this checklist to your Todo list using TodoWrite. The last element should be 'Finish development with final checks...'. DO NOT BE LAZY.
+- *CRITICAL* Add each element of this checklist to the session's task list. The last element should be 'Finish development with final checks...'. DO NOT BE LAZY.
 - Announce "Following the Batuta workflow..." to the user.
 <system-reminder> Do not skip steps. Do not rationalize. Read the skill files even if you think you know them. </system-reminder>
 - Read `{{skills_dir}}/using-skills/SKILL.md`.
@@ -38,7 +38,7 @@ Decisions, not code. Per repo: a short `AGENTS.md` (what the project is, package
 
 # Models and effort
 
-Study and decisions get the strongest model with the highest effort, `max`. Implementation gets the cheapest model the ticket allows: estimate 1 or 2 and low risk → sonnet with low effort; estimate 3 → sonnet with high effort; estimate 5, high risk or domain rules → opus with high effort. The less context an agent will see, the higher its effort. Haiku is never used.
+Effort starts low. Study and decisions get the strongest model at effort `high`; `max` only after `high` shows a reasoning failure. Implementation gets the cheapest model the ticket allows: estimate 1 or 2 and low risk → sonnet with low effort; estimate 3 → sonnet with medium effort; estimate 5, high risk or domain rules → opus with medium effort. Effort goes up one level only when an agent fails or stalls, and the reason is written down. Haiku is never used.
 
 # Issue tracker
 
@@ -46,6 +46,6 @@ Linear, team **Engineering** only, via the Linear MCP. Projects vary per request
 
 # Maestri
 
-The canvas is for the human's eyes, not for agent context. Never use `maestri check` except to diagnose a wedged agent. Diffs do not travel between agents: a reviewer runs `git diff` in the same worktree. Wait for CI with `gh pr checks --watch`, never by polling. A green PR waits for the human, with the Orchestrator's review posted on the PR and the ticket In Review: no agent merges, and "Review and merge PR #N" is a "for you" line. Portals and simulators are for the human to look at. Update notes with `maestri note edit` (substring), never `write` over a note another agent shares. "for you" holds only what is still pending on the human: delete a line he answered or did, never mark it [x]. Measurements, history and status go to the logs stack, never to "for you". Never `maestri dismiss` unless the human asked.
+The canvas is for the human's eyes, not for agent context. Never use `maestri check` except to diagnose a wedged agent. Diffs do not travel between agents: a reviewer runs `git diff` in the same worktree. Wait for CI with `gh pr checks --watch`, never by polling. A green PR waits for the human, with the Orchestrator's review posted on the PR and the ticket In Review: no agent merges, and "Review and merge PR #N" is a "for you" line. Portals and simulators are for the human to look at. Update notes with `maestri note edit` (substring), never `write` over a note another agent shares. "for you" holds only what is still pending on the human, one `- [ ]` checkbox per item: once he ticked or answered a line you wrote, record it on the ticket and delete the line; never tick one for him. Measurements, history and status go to the logs stack, never to "for you". Never `maestri dismiss` unless the human asked.
 
 <include-on-compaction> After a compaction you lose the discipline embedded in skills. Reread every skill in the required block before continuing. </include-on-compaction>
