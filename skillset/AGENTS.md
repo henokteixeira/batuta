@@ -1,5 +1,5 @@
 <required>
-- *CRITICAL* Add each element of this checklist to your Todo list using TodoWrite. The last element should be 'Finish development with final checks...'. DO NOT BE LAZY.
+- *CRITICAL* Add each element of this checklist to the session's task list. The last element should be 'Finish development with final checks...'. DO NOT BE LAZY.
 - Announce "Following the Batuta workflow..." to the user.
 <system-reminder> Do not skip steps. Do not rationalize. Read the skill files even if you think you know them. </system-reminder>
 - Read `{{skills_dir}}/using-skills/SKILL.md`.

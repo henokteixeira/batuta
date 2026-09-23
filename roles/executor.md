@@ -28,7 +28,7 @@ Enumerating the paths is mandatory: before closing the contract, list the code p
 
 ## The flow
 
-1. **TodoWrite** the whole CLAUDE.md checklist before touching a file.
+1. **Task list:** add each element of the CLAUDE.md checklist to the session's task list before touching a file.
 2. **Recon**, and the question round if a decision is open.
 3. **Tests first.** Turn the Testing Plan into real tests. Run them and watch each fail for the right reason: a test that errors on an import, or passes on arrival, has not been watched fail. The expected value of every test comes from the spec, never from the code. Read `testing-anti-patterns` before any mock.
 4. **Minimal implementation** that turns the tests green, then refactor for shape. Small modules with a simple interface over rich logic.
