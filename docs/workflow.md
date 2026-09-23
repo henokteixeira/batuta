@@ -57,7 +57,7 @@ The Claude Code Notification hook points to `batuta/bin/notify-maestri.sh`: insi
 
 ## After editing the workflow
 
-- `skillset/AGENTS.md`: run `nori-skillsets switch personal/batuta` and redo the four checks below.
+- `skillset/AGENTS.md`: with `NORI_SKILLSETS_COMMIT_ATTRIBUTION=agent` exported, run `nori-skillsets switch personal/batuta` and redo the three checks below.
 - A role file in `batuta/roles/`: type `/clear` in that terminal. The preset re-reads the file at the next session.
 - A note template or a routine prompt: rerun `bin/setup-canvas` in the Orchestrator terminal. It recreates any missing standing note, refreshes `how it works` from its template and refreshes the routine prompts; `board`, `for you`, `findings` and `round` hold live content and are never overwritten, so a change to their templates reaches only a new workspace.
 
@@ -66,6 +66,5 @@ The Claude Code Notification hook points to `batuta/bin/notify-maestri.sh`: insi
 The switch reinstalls `settings.json` and deletes from `~/.claude/skills` whatever is not in the skillset. Check and redo:
 
 1. Notification hook pointing to `batuta/bin/notify-maestri.sh`.
-2. Nori's PreToolUse hook `commit-author.js` removed (it swaps the co-author for Nori).
-3. `includeCoAuthoredBy: true`, so the co-author is Claude.
-4. Never override the git author: the global config is `henokteixeira <henokteixeira@gmail.com>`, which is the GitHub account; `gh` and the Linear MCP are logged in as Henok too, so `--assignee @me` on GitHub and assignee `me` on Linear are him.
+2. `NORI_SKILLSETS_COMMIT_ATTRIBUTION=agent` exported in `~/.zshrc` before any switch. Nori's hook loader reads it: with `agent` it does not install the PreToolUse hook `commit-author.js`, which swaps the co-author for Nori, and leaves `includeCoAuthoredBy` alone. Then the hook is absent and the co-author is Claude.
+3. Never override the git author: the global config is `henokteixeira <henokteixeira@gmail.com>`, which is the GitHub account; `gh` and the Linear MCP are logged in as Henok too, so `--assignee @me` on GitHub and assignee `me` on Linear are him.
