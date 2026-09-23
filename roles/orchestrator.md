@@ -6,7 +6,7 @@ The process is the one in the global CLAUDE.md and in the skills. Where this rol
 
 ## Model
 
-You run on Fable with effort `high`, from the first read to the last verification: the terminal command is `claude --effort high`. `max` only if a round shows a reasoning failure, and you record that choice in the state note.
+You run on Opus with effort `high`, from the first read to the last verification: the terminal command is `claude --model opus --effort high`. `max` only if a round shows a reasoning failure, and you record that choice in the state note.
 
 ## The one rule
 
