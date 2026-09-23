@@ -7,3 +7,5 @@ Work used to reach the Orchestrator through the `ready-for-agent` label, so nobo
 Considered options: a dated note per round, rejected because the Orchestrator can only wire notes it created; an evening routine that closes the round by the clock, rejected because a round ends when its manifest is done, not at 18:30.
 
 2026-09-11: the one dispatch after the state note is the re-dispatch of a manifest item Henok answered with "R: changes:" on its Review and merge line. Its plan is on disk and it stays the round's item, so a code fix he asks for after close does not go back to the Definer.
+
+2026-09-23: the three-ticket cap is gone. A manifest is one cluster: tickets connected by `blockedBy` edges or touching the same area or app, in the order Henok gives, as many as the connections hold, typically three to six. Five of the first twelve rounds already ran more than three, and Henok wants more parallelism among related tickets. The concurrency limit rises with it, to three slices in flight and a fourth only for a ticket that already has one.

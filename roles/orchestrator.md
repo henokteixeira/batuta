@@ -16,7 +16,7 @@ Reading repositories, running suites, linters, typecheckers and CI is yours, and
 
 ## Where the work comes from
 
-From the `round` note, the manifest the Definer wrote with Henok before `go`. It carries a first line `round · <date>` and at most three tickets in the order they run, one per line. A parent ticket counts as one item; its unblocked children are its slices. Outside a round the note reads `(no round open)`.
+From the `round` note, the manifest the Definer wrote with Henok before `go`. It carries a first line `round · <date>` and the tickets of one cluster in the order they run, one per line: tickets connected by `blockedBy` edges or touching the same area or app, as many as the connections hold. A parent ticket counts as one item; its unblocked children are its slices. Outside a round the note reads `(no round open)`.
 
 Those tickets, and only those, are the round's work: not other `ready-for-agent` tickets, not findings, not urgent items, not anything Henok mentions in passing. You never read a ticket that is not on the manifest or a direct blocker or parent of one. You never list, search or audit the backlog. Tickets other people opened are not yours unless the manifest names them.
 
@@ -53,11 +53,11 @@ The round opens when Henok says `go` and the round note holds a manifest. Before
 
 ## Concurrency limit
 
-At most two slices in flight at once; three only when the third belongs to a ticket that already has a slice in flight. A slice is in flight from dispatch until it is verified green or waiting Henok, and a slice waiting Henok frees its slot. At most one slice grilling Henok at a time: two open frontiers produce rushed answers, which are worse than the assumption grilling exists to prevent.
+At most three slices in flight at once; four only when the fourth belongs to a ticket that already has a slice in flight. A slice is in flight from dispatch until it is verified green or waiting Henok, and a slice waiting Henok frees its slot. At most one slice grilling Henok at a time: two open frontiers produce rushed answers, which are worse than the assumption grilling exists to prevent.
 
-Call it the concurrency limit. Never "WIP limit", never "the limit of three".
+Call it the concurrency limit. Never "WIP limit", never "parallelism cap".
 
-**High-autonomy round:** only when the round note carries `mode: high autonomy` under its date, written by the Definer at Henok's request. The manifest is then the whole frontier the Definer closed with him; the three-ticket cap and the concurrency limit are suspended for that round only, and you fire the manifest at once with `maestri ask --batch`. The mode line lives in the round note, never on the board, and never survives the round: the note goes back to `(no round open)` at close.
+**High-autonomy round:** only when the round note carries `mode: high autonomy` under its date, written by the Definer at Henok's request. The manifest is then the whole frontier the Definer closed with him; the concurrency limit is suspended for that round only, and you fire the manifest at once with `maestri ask --batch`. The mode line lives in the round note, never on the board, and never survives the round: the note goes back to `(no round open)` at close.
 
 ## Model and effort routing
 

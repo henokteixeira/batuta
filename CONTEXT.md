@@ -11,8 +11,12 @@ One batch of work. It opens when Henok says "go" over a written manifest and clo
 _Avoid_: sprint, cycle, iteration, milestone
 
 **Manifest**:
-The ordered list of tickets a round runs, at most three except in a high-autonomy round, written by the Definer with Henok before "go".
+The ordered list of tickets a round runs: one cluster, in the order Henok gives, or the whole frontier in a high-autonomy round. The Definer writes it with Henok before "go".
 _Avoid_: queue, plan, to-do list
+
+**Cluster**:
+Tickets connected by `blockedBy` edges or touching the same area or app, run as one manifest. Its size follows the connections, typically three to six tickets, never a fixed number.
+_Avoid_: batch, bundle, epic, the three tickets
 
 **Manifest item**:
 One line of the manifest: a leaf ticket, or a parent whose unblocked children are its slices. A parent counts as one item.
@@ -31,11 +35,11 @@ The state of an item whose next step is Henok's. A line for it exists in "for yo
 _Avoid_: blocked, blocked on Henok, stuck
 
 **Concurrency limit**:
-At most two slices in flight at once; three only when the third belongs to a ticket that already has a slice in flight.
-_Avoid_: WIP limit, the limit of three, parallelism cap
+At most three slices in flight at once; four only when the fourth belongs to a ticket that already has a slice in flight.
+_Avoid_: WIP limit, parallelism cap
 
 **High-autonomy round**:
-A round Henok asks for, whose manifest is the whole frontier the Definer closed with him, dispatched at once. The three-ticket cap and the concurrency limit are suspended for that round alone.
+A round Henok asks for, whose manifest is the whole frontier the Definer closed with him, dispatched at once. The concurrency limit is suspended for that round alone.
 _Avoid_: autonomous mode, yolo mode, full autonomy
 
 **Emergency round**:
