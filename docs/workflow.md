@@ -10,8 +10,8 @@ Define before dispatching: you and the Definer close the business rule and the d
 
 One workspace for Shema, called **Shema**, rooted at `~/Documents/programming/obt`. In it:
 
-- **Definidor** (the Definer) — the terminal you talk to, and the front door. Everything you want enters here: ideas, defects, small asks with no open decision, tickets other people opened that you want worked, and the order of the next round; the findings the last round left it reads itself. It defines, and it writes the manifest with you. Fable, effort `max`: `claude --effort max`.
-- **Orquestrador** (the Orchestrator) — the terminal that runs the round: only the tickets on the manifest, in that order. From you it hears "go", "close the round", "emergency", and your answers to the lines it wrote in `for you`. Fable, effort `max`, never lower: `claude --effort max`. Needs **Maestro Mode on** to recruit executors: toggle it on the terminal the first time.
+- **Definidor** (the Definer) — the terminal you talk to, and the front door. Everything you want enters here: ideas, defects, small asks with no open decision, tickets other people opened that you want worked, and the order of the next round; the findings the last round left it reads itself. It defines, and it writes the manifest with you. Fable, effort `high`: `claude --effort high`.
+- **Orquestrador** (the Orchestrator) — the terminal that runs the round: only the tickets on the manifest, in that order. From you it hears "go", "close the round", "emergency", and your answers to the lines it wrote in `for you`. Fable, effort `high`: `claude --effort high`. Needs **Maestro Mode on** to recruit executors: toggle it on the terminal the first time.
 - Five standing notes with fixed names: **round** (the manifest; outside a round its body reads `(no round open)`), **board** (one line per slice of the open round, in manifest order: `<codename> · <ticket> · <state> · <model>`; emptied at round close), **for you** (only what is still pending on you), **findings** (what showed up out of scope, one line each), and **how it works** (the short version of this file). The **logs** stack holds `log · <codename>`, `state · <date>` and `definition · <date>`; you almost never open it. `bin/setup-canvas`, run in the Orchestrator terminal with Maestro Mode on, creates and wires the five notes and schedules the routines; a missing standing note is fixed by rerunning it, never by creating it by hand.
 - Three routines: **morning state** daily at 08:30, **evening round check** daily at 18:30, **for you reminder** on weekdays at noon. They read the round note and the latest state note, report on the board, clean `for you` of what you already answered, and push you the reminder; the evening check also closes the round, but only when every manifest item is merged or waiting Henok. A routine never opens a round and never closes one by the clock.
 
@@ -38,7 +38,7 @@ Only when you ask. The Definer closes everything you brought and writes the whol
 
 ## Models
 
-Decisions and study on the strongest: Definer and Orchestrator on Fable with effort `max`, never lower. Implementation on the cheapest the ticket allows: estimate 1 or 2 and low risk, sonnet with low effort; 3, sonnet with high effort; 5, high risk or domain rule, opus with high effort. Faithfulness reviewer on opus. Never haiku.
+Effort starts low. Decisions and study on the strongest: Definer and Orchestrator on Fable with effort `high`; `max` only if a round shows a reasoning failure, and that choice is recorded in the state note. Implementation on the cheapest the ticket allows: estimate 1 or 2 and low risk, sonnet with effort `low`; 3, sonnet with `medium`; 5, high risk or domain rule, opus with `medium`. Effort goes up one level only when an executor fails or stalls, by re-dispatching the slice from its plan on disk, and the reason goes in `log · <codename>`. Faithfulness reviewer on opus. Never haiku.
 
 ## Where everything lives
 

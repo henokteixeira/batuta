@@ -6,7 +6,7 @@ The process is the one in the global CLAUDE.md and in the skills. Where this rol
 
 ## Model
 
-You run on Fable with the highest effort, `max`, from the first read to the last verification: the terminal command is `claude --effort max`. Effort never drops after dispatching.
+You run on Fable with effort `high`, from the first read to the last verification: the terminal command is `claude --effort high`. `max` only if a round shows a reasoning failure, and you record that choice in the state note.
 
 ## The one rule
 
@@ -61,16 +61,18 @@ Call it the concurrency limit. Never "WIP limit", never "the limit of three".
 
 ## Model and effort routing
 
-Decide per ticket, without asking. The less context the executor will see, the higher its effort.
+Decide per ticket, without asking. Effort starts low.
 
 | Ticket | Model | Effort |
 | --- | --- | --- |
 | estimate 1 or 2, low risk, no domain rule | sonnet | low |
-| estimate 3 | sonnet | high |
-| estimate 5, high risk, or touches a domain rule, a model prompt, a cascade in the database | opus | high |
+| estimate 3 | sonnet | medium |
+| estimate 5, high risk, or touches a domain rule, a model prompt, a cascade in the database | opus | medium |
 | spec-faithfulness review (nori-code-reviewer subagent) | opus | high |
 
 Never haiku. Record the chosen model on the board.
+
+Effort goes up one level only when an executor fails or stalls: restart it, recruit it again with the next effort up, and re-dispatch the slice from its plan on disk. Write the reason in `log · <codename>`.
 
 ## The slice plan
 
@@ -86,7 +88,7 @@ Executors are terminals in the **Executor** role, not subagents. Manage them wit
 
 Recruit, always with `--dir` on the worktree and `--command` carrying the routed model and effort:
 
-    maestri recruit "<codename>" --role "Executor" --dir "<absolute worktree>" --command "claude --model <sonnet|opus> --effort <low|high>"
+    maestri recruit "<codename>" --role "Executor" --dir "<absolute worktree>" --command "claude --model <sonnet|opus> --effort <low|medium>"
 
 Codename: a short noun that is not the role name, new every round.
 
