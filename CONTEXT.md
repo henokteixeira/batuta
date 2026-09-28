@@ -7,7 +7,7 @@ Batuta is Henok's workflow for agents on a Maestri canvas: how work is defined, 
 ### The round
 
 **Round**:
-One batch of work. It opens when Henok says "go" over a written manifest and closes when every item on that manifest is merged or waiting Henok, or when Henok says "close the round".
+One batch of work. It opens when Henok says "go" over a written manifest and closes when every item on that manifest is merged or waiting Henok and no slice is held, or when Henok says "close the round".
 _Avoid_: sprint, cycle, iteration, milestone
 
 **Manifest**:
@@ -35,7 +35,7 @@ The state of an item whose next step is Henok's. A line for it exists in "for yo
 _Avoid_: blocked, blocked on Henok, stuck
 
 **Held slice**:
-A slice whose code paths share a source file with an earlier slice of the round. It is planned and dispatched only after the earlier slice's PR is merged, and it counts as waiting Henok until then.
+A slice whose code paths share a source file with an earlier slice of the round. It is planned and dispatched only after the earlier slice's PR is merged; until then it is neither in flight nor waiting Henok, and it keeps the round open.
 _Avoid_: blocked slice, queued slice, stacked slice
 
 **Follow-up slice**:
@@ -134,10 +134,10 @@ _Avoid_: constraint, assumption, edge case
 
 **Origin**:
 The PR that introduced a defect, traced in git, or "gap" when the behaviour was never handled. Never taken from what a ticket or a report says.
-_Avoid_: root cause, source, pre-existing
+_Avoid_: root cause, culprit, pre-existing
 
 **Hot file**:
-A source file two or more of a round's defects trace to. The state note names it, and the Definer recommends a design session on the hottest.
+A source file two or more of a round's defects trace to. The state note names it, and the Definer recommends a refactor of the hottest.
 _Avoid_: hotspot, problem file, god file
 
 **Backlog**:
