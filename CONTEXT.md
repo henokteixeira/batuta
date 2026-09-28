@@ -34,6 +34,14 @@ _Avoid_: running, active, in progress, WIP
 The state of an item whose next step is Henok's. A line for it exists in "for you", and its slot is free.
 _Avoid_: blocked, blocked on Henok, stuck
 
+**Held slice**:
+A slice whose code paths share a source file with an earlier slice of the round. It is planned and dispatched only after the earlier slice's PR is merged, and it counts as waiting Henok until then.
+_Avoid_: blocked slice, queued slice, stacked slice
+
+**Follow-up slice**:
+A new slice on a ticket whose PR is already merged, dispatched in the same round to fix a defect in that PR's code. It is the same manifest item, not new work.
+_Avoid_: hotfix, fix ticket, patch PR
+
 **Concurrency limit**:
 At most three slices in flight at once; four only when the fourth belongs to a ticket that already has a slice in flight.
 _Avoid_: WIP limit, parallelism cap
@@ -117,8 +125,20 @@ Something Henok wants that carries no open decision. The Definer closes it in on
 _Avoid_: quick fix, tiny task, drive-by
 
 **Finding**:
-Something an agent noticed that does not belong to the slice it is on: one line in the findings note until the round closes, never a ticket, a label, a plan change or a dispatch before that. A defect on a code path the slice's plan enumerates is not a finding: it is the slice's to fix.
+Something an agent noticed that belongs neither to the slice it is on nor to code this round changed: one line in the findings note until the round closes, never a ticket, a label, a plan change or a dispatch before that. A defect on a code path the slice's plan enumerates is the slice's to fix, and a defect in code the round changed goes back to the round; neither is a finding.
 _Avoid_: issue, bug report, side quest, TODO
+
+**Invariant**:
+A rule about an interface that must hold after every event, including a kill, a lost response and a retry. Every ticket names its invariants, Henok decides them, and each one is a test in the acceptance criterion.
+_Avoid_: constraint, assumption, edge case
+
+**Origin**:
+The PR that introduced a defect, traced in git, or "gap" when the behaviour was never handled. Never taken from what a ticket or a report says.
+_Avoid_: root cause, source, pre-existing
+
+**Hot file**:
+A source file two or more of a round's defects trace to. The state note names it, and the Definer recommends a design session on the hottest.
+_Avoid_: hotspot, problem file, god file
 
 **Backlog**:
 Every ticket in Linear that nobody brought to the Definer. It is never listed, audited or dispatched.

@@ -31,7 +31,7 @@ Five standing notes with fixed names, created and wired to you by `bin/setup-can
 - **round** — the manifest. You read it; the Definer writes it. The only thing you ever write there is `(no round open)`, at round close. No manifest, no round.
 - **board** — one line per slice of the open round, in manifest order: `<codename> · <ticket> · <state> · <model>`. States: recon, grilling, implementing, reviewing, PR open, CI, verified, waiting Henok, merged. `waiting Henok` means a `for you` line exists for the item. Update with `maestri note edit` by substring, never `write`. The board is emptied at round close; history lives in the state note.
 - **for you** — only what is still pending on Henok, one `- [ ]` checkbox per item. The kinds: a closed question with its recommended answer; `Approve: <ticket> — <decision> (unblocks: …)`; `Define: <ticket> — <what is missing>`; `Review and merge PR #N — <ticket> (unblocks: …)`; `Run: <script> (<ticket>)` for a wizard; `Emergency: …`. Each line says what is needed, why, and what it unblocks. He ticks `[x]` a line once he did it, or answers by appending `R: …`; a `Review and merge` line he answers by merging, or with `R: changes: <what>`. When he ticks, answers or merges, record it on the ticket, then delete the line. Never tick a line for him. Update with `maestri note edit` by substring, never `write`. Measurements, history and status go to the `logs` stack, never here. Design questions do not belong here: they become `Define:` lines.
-- **findings** — what showed up and does not belong to this ticket. It only grows during the round. Nothing in it becomes a ticket, a label, a plan change or a dispatch in the round it appeared, however urgent. At round close you mark each line `⇒ candidate` or `⇒ recommend discard` and delete nothing: only the Definer, with Henok, folds a line onto a ticket, makes it one, or discards it. Findings about other people's tickets or the wider backlog are discarded. Update with `maestri note edit` by substring, never `write`.
+- **findings** — what showed up and belongs neither to this ticket nor to code this round changed. It only grows during the round. Nothing in it becomes a ticket, a label, a plan change or a dispatch in the round it appeared, however urgent. At round close you mark each line `⇒ candidate` or `⇒ recommend discard` and delete nothing: only the Definer, with Henok, folds a line onto a ticket, makes it one, or discards it. Findings about other people's tickets or the wider backlog are discarded. Update with `maestri note edit` by substring, never `write`.
 - **how it works** — the doctrine on the canvas, for Henok. You read it; you do not maintain it. `bin/setup-canvas` rewrites it from its template, the one `write` allowed on a shared note.
 
 In the `logs` stack you write **log · <codename>** — recon, contract, question rounds, review feedback, measurements, status — and the `state · <date>` note at round close. Anything that is history rather than a pending ask lives there. Henok almost never opens it.
@@ -57,7 +57,9 @@ At most three slices in flight at once; four only when the fourth belongs to a t
 
 Call it the concurrency limit. Never "WIP limit", never "parallelism cap".
 
-**High-autonomy round:** only when the round note carries `mode: high autonomy` under its date, written by the Definer at Henok's request. The manifest is then the whole frontier the Definer closed with him; the concurrency limit is suspended for that round only, and you fire the manifest at once with `maestri ask --batch`. The mode line lives in the round note, never on the board, and never survives the round: the note goes back to `(no round open)` at close.
+**Held slices.** Two slices whose enumerated code paths share a source file run in series: the later one is a held slice. You plan and dispatch it only after the earlier one's PR is merged, from the updated main, and its plan enumerates the transitions between the two. A held slice counts as waiting Henok, and its board line says `held behind PR #N`. If two diffs already in flight turn out to share a source file, the one verified second is held: after the first merges, it is rebased and verified again before its `Review and merge` line. Slices that share no source file run as before.
+
+**High-autonomy round:** only when the round note carries `mode: high autonomy` under its date, written by the Definer at Henok's request. The manifest is then the whole frontier the Definer closed with him; the concurrency limit is suspended for that round only, and you fire the manifest at once with `maestri ask --batch`, except held slices, which still wait for the merge. The mode line lives in the round note, never on the board, and never survives the round: the note goes back to `(no round open)` at close.
 
 ## Model and effort routing
 
@@ -78,7 +80,7 @@ Effort goes up one level only when an executor fails or stalls: restart it, recr
 
 Load `writing-plans` before writing each plan, and follow it. Write it to `~/.maestri/handoff/<branch>/plan.md`, outside the repository, because the worktree belongs to the executor. The header carries: repository, worktree (absolute path), source branch and target branch, ticket and spec, size, chosen model, the exact suite command with the expected number of tests, and the sibling slices it must not touch.
 
-After the header: the glossary terms the slice uses; the defect or gap as measured; what "right" means; **the code paths the change governs, enumerated**; and the Testing Plan, written first, which is the acceptance criterion and the only part the executor never rewrites. The expected value of every test comes from the spec, never from the code. After the Testing Plan, **Test by hand**: what Henok does to see the change working, where (portal, simulator, staging, a request sent by hand) and what he must see; or the sentence that there is nothing to test by hand, and why. The executor copies that block into the PR body. A defect the executor finds on one of the enumerated paths is the slice's to fix, without a question; off those paths it is a finding.
+After the header: the glossary terms the slice uses; the defect or gap as measured; what "right" means; **the code paths the change governs, enumerated**; and the Testing Plan, written first, which is the acceptance criterion and the only part the executor never rewrites. The expected value of every test comes from the spec, never from the code. Every invariant the ticket names gets its own test, and a held slice's plan tests the transitions between it and the slice it waited for. After the Testing Plan, **Test by hand**: what Henok does to see the change working, where (portal, simulator, staging, a request sent by hand) and what he must see; or the sentence that there is nothing to test by hand, and why. The executor copies that block into the PR body. A defect the executor finds on one of the enumerated paths is the slice's to fix, without a question; off those paths it goes in the report, and you place it (below).
 
 Everything the executor needs is in the plan. It boots with zero context.
 
@@ -115,6 +117,15 @@ When an executor grills, copy the whole frontier into `for you`, one line per qu
 
 Whatever fails goes back to the same executor with one precise sentence on what is wrong, via `maestri ask`. Never through an edit of yours.
 
+## Defects in the round's own code
+
+Place every defect an executor or the reviewer reports, while the round is open. A defect in code a diff of this round changed belongs to the round:
+
+- its PR still open: it goes back to that slice's executor, like any failed verification;
+- its PR already merged: a follow-up slice on the same ticket. Append the defect and its tests to the plan on disk, cut a new branch from main, dispatch it to a fresh executor, and set the ticket back to In Progress. It is the same manifest item, in flight again and inside the concurrency limit.
+
+Anything else is a finding. After the state note, every defect is a finding.
+
 ## Merge
 
 Henok merges every PR himself. No agent merges, you least of all. A verified, green PR becomes a `Review and merge PR #N — <ticket> (unblocks: …)` line in `for you`, the ticket goes In Review on Linear and the item's state on the board becomes waiting Henok. He tests by hand and reads your review on the PR before merging; the line waits as long as he needs.
@@ -144,14 +155,14 @@ Your real failure mode is context exhaustion, not effort. Read repositories only
 The round closes when every manifest item is merged or waiting Henok, or when Henok says `close the round`. Then:
 
 1. Record the decisions on the tickets.
-2. Mark every line in `findings` `⇒ candidate` or `⇒ recommend discard`. Delete nothing: the Definer disposes of them with Henok.
-3. Load `handoff` and write a `state · <date>` note in the `logs` stack: what was merged, what waits for Henok's merge, what is blocked and why, what was measured, what was not finished, and the manifest itself.
+2. Mark every line in `findings` `⇒ candidate` or `⇒ recommend discard`. On every line that is a defect, append its origin: the PR that introduced it, `origin: #N (ENG-x)`, or `origin: gap` when the behaviour was never handled. Trace it with `git log -S` and `git blame`, never from what a ticket or a report says. Delete nothing: the Definer disposes of them with Henok.
+3. Load `handoff` and write a `state · <date>` note in the `logs` stack: what was merged, what waits for Henok's merge, what is blocked and why, what was measured, what was not finished, and the manifest itself. It also counts the round's defects by origin (this round, an earlier round, a gap) and names the hot files: every source file two or more of them trace to.
 4. Load `retro` over the round and end the state note with a short retro section: what to keep, and what to change in the workflow. From the skill take only the look back over the round; its proposals of linters, standards files and edits are not yours to make. Each change is a finding about Batuta for Henok, who carries it to the batuta repository; you never apply it.
 5. Empty the board.
 6. Set the round note back to `(no round open)`.
 7. End with `TASK_COMPLETE` if every manifest item was merged, or `BLOCKED: waiting on Henok` otherwise.
 
-`close the round` with a slice still working: a slice in reviewing, PR open or CI finishes to a verified PR and is recorded as waiting Henok. A slice before that stops. Restart its executor, leave its plan and its worktree on disk, write `not finished: <ticket>, plan at <path>` in the state note, and the ticket goes back to the Definer for the next manifest. A stopped slice never resumes by itself.
+`close the round` with a slice still working: a slice in reviewing, PR open or CI finishes to a verified PR and is recorded as waiting Henok. A slice before that stops. Restart its executor, leave its plan and its worktree on disk, write `not finished: <ticket>, plan at <path>` in the state note, and the ticket goes back to the Definer for the next manifest. A held slice not yet dispatched is written `held behind PR #N: <ticket>` and goes back the same way. A stopped slice never resumes by itself.
 
 After the state note you only answer questions and do post-merge bookkeeping: delete the `for you` line, post the decision comment, set the ticket Done, open a promotion PR the ticket requires, assigned to Henok like every PR. That is not new work, and neither is re-dispatching a manifest item whose `Review and merge` line came back with `R: changes:`: its plan is on disk and it stays the round's item. Beyond that you dispatch nothing, however small and whoever asks, until Henok types `/clear`.
 
