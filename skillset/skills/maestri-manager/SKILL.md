@@ -6,8 +6,6 @@ user-invocable: true
 
 # Maestri Team Orchestration
 
-
-
 You're running inside Maestri, a spatial development workspace that connects AI agents, terminals, notes, and browser portals on a visual canvas.
 The `maestri` CLI is a command-line executable pre-installed and available on PATH. If `maestri` is not found, use `"$MAESTRI_CLI"` instead; this environment variable always points to the full binary path.
 
@@ -42,7 +40,7 @@ To notify the user, you must run for example:
 maestri notify "The release is ready for your review."
 ```
 
-### `maestri recruit "Name" [--preset "Claude Code"] [--role "Reviewer"] [--floor "Experiment"] [--command "claude --resume"] [--dir "/path/to/project"]`
+### `maestri recruit "Name" [--preset "Claude Code"] [--role "Reviewer"] [--floor "Experiment"] [--workspace "Frontend"] [--command "claude --resume"] [--dir "/path/to/project"]`
 
 Spawns a new terminal on the canvas, names it, and auto-connects it to you. Returns when the terminal is created (the agent inside may still be booting — give it a few seconds before the first `ask`).
 
@@ -52,6 +50,7 @@ Spawns a new terminal on the canvas, names it, and auto-connects it to you. Retu
 - **--preset** — one of the user's quick-start presets. Run `maestri preset list` to see what's available before passing this flag. **If omitted, defaults to a copy of yourself** — same agent type the user picked for you.
 - **--role** — name of an existing role preset. The recruit is launched in `.maestri/roles/<id>/` so the role's prompt becomes its starting context. Run `maestri role list` to see available roles, or `maestri role create` to add a new one before recruiting. Optional: omit when you just need a vanilla teammate and plan to set context via `maestri ask`.
 - **--floor**: place the recruit on a different floor of this workspace (run `maestri floor list` from the maestri-workspace skill to see floors; `--floor "Ground"` targets the ground level). When `--dir` is omitted, a git-isolated floor uses its own clone so the recruit's work can't touch the ground checkout. Omit `--floor` to recruit onto your own floor. The rope still connects it to you across floors; `ask`, `check`, and `dismiss` work the same.
+- **--workspace**: place the recruit in another workspace (its ground level, or `--floor` there; run `maestri workspace list` from the maestri-workspace skill to see workspaces). The recruit starts in that workspace's directory and runs where that workspace runs, since it is that project's agent. You address it as `Name @ Workspace`, exactly as `maestri list` prints it.
 - **--command** — override the shell command. Almost never needed; use the preset.
 - **--dir**: start the recruit in this working directory instead of inheriting yours. When combined with `--floor`, the explicit directory takes precedence over the floor's default checkout path. Omit it to keep the inherited behavior.
 
@@ -62,10 +61,11 @@ maestri recruit "<your-codename>" --role "Code Reviewer"
 maestri recruit "<your-codename>" --preset "Codex" --role "Test Writer"
 maestri recruit "<your-codename>"                  # vanilla teammate, copy of yourself
 maestri recruit "<your-codename>" --floor "Experiment" --role "Prototyper"
+maestri recruit "<your-codename>" --workspace "Frontend" --role "Reviewer"
 maestri recruit "<your-codename>" --dir "/path/to/another/project"
 ```
 
-**Isolated-experiment flow:** when the user wants risky or experimental work kept out of the main checkout, create a git-isolated floor first (`maestri floor create "Experiment" --branch feat/idea`, from the maestri-workspace skill), then recruit onto it with `--floor "Experiment"`. The recruit works in the floor's isolated clone on its own branch while you and the user stay on the ground floor.
+**Isolated-experiment flow:** when the user wants risky or experimental work kept out of the main checkout, create a git-isolated floor first (`maestri floor create "Experiment" --branch feat/idea`, from the maestri-workspace skill), then recruit onto it with `--floor "Experiment"`. The recruit works in the floor's isolated clone on its own branch while you and the user stay on the ground floor. When the work is done and committed, `maestri floor land "Experiment"` (also from the maestri-workspace skill, from the ground) brings the branch back.
 
 ### `maestri recruit "New Name" --preset "Codex" --replace "Old Name"`
 

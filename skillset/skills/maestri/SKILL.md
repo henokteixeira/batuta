@@ -6,8 +6,6 @@ user-invocable: true
 
 # Maestri Inter-Agent Communication
 
-
-
 You're running inside Maestri, a spatial development workspace that connects AI agents, terminals, notes, and browser portals on a visual canvas.
 The `maestri` CLI is a command-line executable pre-installed and available on PATH. If `maestri` is not found, use `"$MAESTRI_CLI"` instead; this environment variable always points to the full binary path.
 
@@ -29,10 +27,10 @@ Connected notes can be read and written through the `maestri` CLI.
 - `maestri note stack "Note Name" ["Fichário"]` — file (or move) an existing note into a fichário; `maestri note unstack "Note Name"` frees it
 - `maestri note delete "Note Name"` — remove a connected note from the canvas. **Destructive. Only run when the user explicitly asks you to delete the note.** Never delete a note on your own initiative, even to tidy up.
 
-Always run `maestri list` first to get the exact agent and note names.
+Always run `maestri list` first to get the exact agent and note names. An agent wired in from another workspace is listed as `Name @ Workspace`; that whole string is its name, use it exactly as printed.
 The response from `ask` returns as soon as the other agent finishes. Scale the Bash tool timeout to the estimated completion time, usually from 1min (easy) to 10min (most tasks). If you expect the response to exceed one terminal screen (e.g. code review, planning, debugging), use the ask back approach detailed below.
 If the timeout expires before the agent responds, do NOT re-send the prompt. Run `maestri check "Agent Name"` to see their progress, then wait again with an appropriate timeout. Never interrupt an agent that is still working, and do not edit files that the other agent is actively modifying — wait for them to finish first.
-The ask back approach: Tell the agent to report back with `maestri ask "Your Name" "<result>"` when done (your name is under `You:` in `maestri list`). This way their message resolves your waiting `ask` automatically and arrives in full as a new incoming prompt.
+The ask back approach: Tell the agent to report back with `maestri ask "Your Name" "<result>"` when done (your name is under `You:` in `maestri list`; when the agent is in another workspace, quote the `Name @ Workspace` address shown right under `You:` instead). This way their message resolves your waiting `ask` automatically and arrives in full as a new incoming prompt.
 Use `check` to read what an agent is currently showing without sending a prompt — useful to check if a previous request completed or to see its current state. Be careful not to misread unsent text in their TUI input area as instructions to you.
 
 ## Asking several agents at once

@@ -1,12 +1,10 @@
 ---
 name: maestri-workspace
-description: Create new Maestri workspaces and floors from the command line, optionally cloning an existing workspace as a starting point. Use when the user asks to provision, spin up, or scaffold a new workspace, project environment, or isolated floor.
+description: Create new Maestri workspaces and floors from the command line, optionally cloning an existing workspace as a starting point, and land or delete a floor when its work is done. Use when the user asks to provision, spin up, or scaffold a new workspace, project environment, or isolated floor, or to land, merge back, or remove a floor.
 user-invocable: true
 ---
 
 # Maestri Workspace Provisioning
-
-
 
 You're running inside Maestri, a spatial development workspace that connects AI agents, terminals, notes, and browser portals on a visual canvas.
 The `maestri` CLI is a command-line executable pre-installed and available on PATH. If `maestri` is not found, use `"$MAESTRI_CLI"` instead; this environment variable always points to the full binary path.
@@ -17,7 +15,7 @@ These commands require **Maestro Mode** on your terminal. If a command returns "
 
 ## Scope & safety
 
-- Creation and filing are additive and reversible. There are deliberately **no delete or rename commands** — anything destructive stays in the UI, on explicit user action.
+- Creation and filing are additive and reversible. Renaming is allowed too — it's a label change, nothing underneath moves. There is deliberately **no delete command** — anything destructive stays in the UI, on explicit user action.
 - Creation is always silent: nothing changes on the user's screen. The new workspace or floor simply appears in the sidebar, ready when the user opens it.
 - The target directory must already exist — create the folder (and `git init` if wanted) before calling `workspace create`.
 
@@ -49,6 +47,14 @@ maestri workspace move "Q3 Report" --folder "Reports" --root
 maestri workspace move "Scratch" --root
 ```
 
+### `maestri workspace rename "Current Name" "New Name"`
+
+Renames an existing workspace in the sidebar. Only the label changes — the canvas, its floors, and its working directory are untouched. The new name must not collide with another workspace (a case-only change like `"acme"` → `"Acme"` is fine). Unknown names fail with the list of valid names to run first.
+
+```
+maestri workspace rename "Acme Churn Analysis" "Acme Churn v2"
+```
+
 ### `maestri workspace list`
 
 Prints the sidebar hierarchy exactly as the user sees it — Pinned first, then the root workspaces and folders in order, then each group with its folders — with every workspace's directory and floor count, marking the one your terminal lives in. Empty groups and folders are listed too, so the output doubles as a map of valid filing destinations. Run it before `create` or `move` to pick a free name, the exact `--from` source, and where the workspace should live.
@@ -67,9 +73,31 @@ maestri floor create "Refactor Auth" --branch refactor-auth
 maestri floor create "Scratch" --no-git
 ```
 
-Landing a floor's work (merging its branch back) is done by the user in the UI — there is no CLI command for it.
-
 After creating an isolated floor you can staff it without leaving your own floor: `maestri recruit "Name" --floor "Refactor Auth" --role "..."` (from the maestri-manager skill) spawns an agent there, working inside the floor's clone, still wired to you for `ask`/`check`.
+
+### `maestri floor land "Name" [--into BRANCH] [--delete-branch] [--keep-floor]`
+
+Brings the floor's branch into the project, the way the user's Land button does. **Run it from a terminal on the ground level**: a floor is never landed from within itself, and a terminal on any floor is refused. Landing removes the floor afterwards and keeps its branch in the project, ready to review or merge.
+
+- `--into BRANCH`: also merge the floor's branch into BRANCH (for example `main`), like choosing a target in the landing sheet.
+- `--delete-branch`: after a merge with `--into`, delete the floor's branch.
+- `--keep-floor`: leave the floor in place after landing.
+
+A land is refused, with the reason, when there is uncommitted work on the floor or on the ground, or when the merge would conflict (the files are named). Nothing is changed in that case: commit or stash the work, or resolve the conflict in the floor's clone, then land again. Ask the agent on the floor to commit its work before you land it.
+
+```
+maestri floor land "Refactor Auth"
+maestri floor land "Refactor Auth" --into main --delete-branch
+```
+
+### `maestri floor delete "Name" [--keep-branch] [--force]`
+
+Removes the floor: its terminals, notes and drawings, and its clone. The floor's branch is deleted from the project too unless `--keep-branch`. **From the ground level only**, like `land`. If the clone cannot be removed the floor is left untouched and the command says why; `--force` removes the floor anyway.
+
+```
+maestri floor delete "Scratch"
+maestri floor delete "Refactor Auth" --keep-branch
+```
 
 ### `maestri floor list`
 
