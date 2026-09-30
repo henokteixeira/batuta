@@ -93,7 +93,7 @@ The line in "for you" that sends a manifest ticket back to the Definer, naming w
 _Avoid_: blocker note, clarification, question
 
 **Test by hand**:
-The block that closes a slice plan and the PR body: what Henok does to see the change working and what he must see, or why there is nothing to test by hand.
+The block that closes a slice plan and that the PR body carries: what Henok does to see the change working and what he must see, or why there is nothing to test by hand.
 _Avoid_: manual test, QA, smoke test, Look line
 
 ### People and terminals

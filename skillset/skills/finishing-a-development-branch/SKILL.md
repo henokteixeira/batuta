@@ -73,19 +73,23 @@ golangci-lint run --fix
 git push -u origin <feature-branch>
 
 # Create PR
-gh pr create --assignee @me --title "<title>" --body "$(cat <<'EOF'
-## Summary
-🤖 Generated with [Nori](https://noriagentic.com/)
+gh pr create --assignee @me --title "<the outcome, in product words; prefixed by the ticket when there is one>" --body "$(cat <<'EOF'
+## Why
+<one or two sentences: what prompted this and what was wrong>
 
-<2-3 bullets of what changed>
+## What changes
+- <at most three bullets, in product words, no code identifiers>
 
-## Test Plan
-- [ ] <verification steps>
+## Test by hand
+1. <step> → <what you should see>
 
-Share Nori with your team: https://www.npmjs.com/package/nori-skillsets
+## Size
++<added> −<removed> lines, tests excluded.
 EOF
 )"
 ```
+
+The body is read by a human deciding whether to merge: about 200 words, the point first, nothing he does not need. Evidence (test runs, falsification, commit history, send-backs) belongs in the review, never here. The Size section follows the small-PR practice in Code style: when the diff is past it, one line says why it could not be smaller.
 
 10. Merge main and resolve conflicts if necessary.
 

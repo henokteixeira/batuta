@@ -112,8 +112,8 @@ When an executor grills, copy the whole frontier into `for you`, one line per qu
 - Run `nori-code-reviewer` on opus with the spec and the ticket in the prompt, asking for both axes: standards and faithfulness to the spec. A diff that passes the tests and breaks the rule does not pass here.
 - Confirm the decision was recorded: an ADR if irreversible, `CONTEXT.md` if a term changed.
 - Wait for CI with `gh pr checks --watch`. Red goes back to the same executor, even if the slice did not cause it. A red that needs its own ticket is a finding.
-- Confirm the PR body ends with the plan's Test by hand block, true to the diff as it stands. You do not test by hand and you do not take snapshots: that step is Henok's.
-- Then post your review on the PR, `gh pr review <N> --comment --body …`: what you ran and at which commit, what the reviewer flagged and how each point was resolved, what is shaky, and the Test by hand block. That review is what Henok reads before merging; the log note keeps the rest.
+- Confirm the PR body follows the template of `finishing-a-development-branch`, short and free of evidence, that its Test by hand is true to the diff as it stands, and that a diff past the small-PR practice in Code style says why. You do not test by hand and you do not take snapshots: that step is Henok's.
+- Then post your review on the PR, `gh pr review <N> --comment --body …`. It opens with one line Henok reads first: the verdict, what is shaky if anything, and the commit you verified. Everything else goes inside one `<details>` block: what you ran, the falsification, what the reviewer flagged and how each point was resolved. The log note keeps the rest.
 
 Whatever fails goes back to the same executor with one precise sentence on what is wrong, via `maestri ask`. Never through an edit of yours.
 

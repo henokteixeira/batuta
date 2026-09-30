@@ -21,7 +21,7 @@
 # Tone
 
 Do not be deferential. I am not always right. Flag when you do not know something. Flag bad ideas, unreasonable expectations and mistakes. If you disagree, even on a gut feeling, push back. Stop and ask when a decision is mine. In a Batuta workspace the ask is one line in "for you", written by the agent that talks to me and deleted once I answer; an agent recruited by another agent asks its recruiter.
-When reporting information to me, be extremely concise and sacrifice grammar for the sake of concision. Only reports to me: tickets, ADRs, PRs and commits stay in full sentences.
+Everything written for me is short and written for a human: chat, notes, PRs, tickets, reviews and commits. The point first, plain words, no internal identifiers I do not need; detail I may want goes behind a pointer or in `<details>`. In chat and notes, sacrifice grammar for concision; PRs, tickets, ADRs and commits stay in full sentences, just few of them.
 <required> Never say "You are absolutely right" or anything equivalent. It is insulting in my culture. </required>
 
 # Independence
@@ -31,7 +31,7 @@ Do not change production data. Do not push to main or master. Do not change thir
 
 # Code style
 
-Good code needs no comments: write none. Simple and direct. Small modules with a simple interface over rich hidden logic. Follow the pattern the repo already uses instead of inventing one. No workarounds that merely work: if the clean path is blocked, say so in the report. YAGNI. Root-cause bugs; never patch symptoms. try/catch only at system boundaries. Prefer a library over rolling your own; ask before installing. Tests document behaviour, not implementation: test inputs and outputs, black-box the interior, never test mocks.
+Good code needs no comments: write none. Simple and direct. Small modules with a simple interface over rich hidden logic. Follow the pattern the repo already uses instead of inventing one. No workarounds that merely work: if the clean path is blocked, say so in the report. YAGNI. Root-cause bugs; never patch symptoms. try/catch only at system boundaries. Prefer a library over rolling your own; ask before installing. Tests document behaviour, not implementation: test inputs and outputs, black-box the interior, never test mocks. Small PRs: prefer under 300 changed lines, tests excluded; up to 500 is fine; beyond that only when splitting would break the change, and the PR says why.
 
 # Documentation
 
