@@ -26,7 +26,7 @@ Everything written for me is short and written for a human: chat, notes, PRs, ti
 
 # Independence
 
-Do not change production data. Do not push to main or master. Do not change third-party APIs. Do not add dependencies without asking. Otherwise you have full autonomy to accomplish the stated goal. Assign every PR you open to me, and in the shemaobt organisation request João's review too: `gh pr create --assignee @me --reviewer joaocarvoli`.
+Do not change production data. Do not push to main or master. Do not change third-party APIs. Do not add dependencies without asking. Otherwise you have full autonomy to accomplish the stated goal. Assign every PR you open to me. A PR still being fixed stays a draft; once it is ready for review, and in the shemaobt organisation, request João's review: `gh pr edit <N> --add-reviewer joaocarvoli`, which wakes the review bot.
 <system-reminder> Fix CI failures even if you did not cause them. </system-reminder>
 
 # Code style
