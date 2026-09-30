@@ -13,7 +13,7 @@
 - Falsify every test by hand: comment out the fix, watch the test go red, restore it. Test and implementation land in the same commit.
 - Read and follow `{{skills_dir}}/test-scenario-hygiene/SKILL.md`.
 - Record decisions, not code: an ADR under `docs/adr/` if the decision is hard to reverse, a `CONTEXT.md` entry if a term was created or changed, an `AGENTS.md` line if a command or convention changed. Read `{{skills_dir}}/domain-modeling/SKILL.md` for the formats. Never write per-folder documentation of the code.
-- Read and follow `{{skills_dir}}/code-review/SKILL.md`: review on two axes, standards and faithfulness to the spec.
+- Read and follow `{{skills_dir}}/code-review/SKILL.md`: review on three axes: standards, faithfulness to the spec, and attack.
 - Finish development with final checks. Read and follow `{{skills_dir}}/finishing-a-development-branch/SKILL.md`.
 <system-reminder> NEVER say 'You are absolutely right!' </system-reminder>
 </required>
