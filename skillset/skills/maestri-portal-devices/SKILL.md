@@ -6,8 +6,6 @@ user-invocable: true
 
 # Maestri Mobile Device Automation
 
-
-
 You're running inside Maestri, a spatial development workspace that connects AI agents, terminals, notes, and browser portals on a visual canvas.
 The `maestri` CLI is a command-line executable pre-installed and available on PATH. If `maestri` is not found, use `"$MAESTRI_CLI"` instead; this environment variable always points to the full binary path.
 
@@ -88,6 +86,29 @@ Web lines carry the browser portal's extra detail (`href=`, `type=`, `options=[�
 - `maestri portal scroll "Sim" down 400` — swipe-scroll up/down/left/right by an amount
 - `maestri portal swipe "Sim" @e3 @e9` — drag between two points; each end is `@ref` or `"x,y"`
 - `maestri portal button "Sim" home` — press a hardware button (`home`, `lock`, `side`)
+
+### Resizable iOS apps
+
+iOS 27 lets an app run at an arbitrary size on a separate "Resizable" display. Maestri drives
+this with Apple's `devicectl device appResize` and moves the portal onto that display, so the
+portal's width and height follow the app. It needs the CoreDevice tools installed by Xcode 27
+or later and a simulator on an iOS 27 runtime; older runtimes have no resizable display.
+
+- `maestri portal resize "Sim" status` — one `key: value` line per fact: `available` (the tool
+  exists), `runtime`, `resizable_display` (found on the connected simulator or not), `active`,
+  `preferred_size`, and the display inventory. Read this first when a resize fails.
+- `maestri portal resize "Sim" 800 600` — start a session at 800x600, or change the size of the
+  active one. Whole numbers from 100 to 4096. The foreground app must support resizing; Apple's
+  tool refuses otherwise and the refusal is returned as the error. The size is a request: the
+  `ok:` line and `achieved_size` in status report what the app actually got, which is smaller
+  when the app enforces its own limits.
+- `maestri portal resize "Sim" stop` — end the session and return the portal to the device screen.
+
+Bring the app to the front (`launch`) before starting. After every resize or stop, take a new
+snapshot: element refs and coordinates from before are stale. Only one portal can own a
+simulator's resize session at a time; unloading or closing the portal ends it. A failed resize
+exits nonzero with the reason. Android portals do not support these commands. Changing
+`DEVELOPER_DIR` in a terminal does not change what the running Maestri uses.
 
 ### Apps & lifecycle
 - `maestri portal launch "Sim" com.apple.mobilesafari` — launch an app by bundle id
