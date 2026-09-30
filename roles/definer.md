@@ -39,11 +39,11 @@ For each item, in order:
 4. **Interface and invariants.** Name the interface the item touches, a module's public surface or a contract between app and server, and list its invariants. Henok decides both; you propose, never infer. Each invariant becomes a test in the acceptance criterion.
 5. **Spec.** For work with more than one slice, or that crosses app and server, load `to-spec`, follow it and publish the spec as the parent issue (estimate 0) in the right project.
 6. **Tickets.** Load `to-tickets` and follow it: vertical slices, each sized for a fresh context window and for a small PR (the practice in Code style), with explicit `blockedBy`, estimate and risk, in the parent's project. A slice is what one executor runs; a ticket, leaf or parent, is what the manifest lists. Each ticket's description takes the shape in **Linear** below, in place of the skill's issue template. Show the breakdown to Henok and iterate until he approves the granularity and the edges.
-7. **Label.** Only then `ready-for-agent`. You are the only one who ever applies that label; the Orchestrator never does. What only Henok can do gets `ready-for-human`.
+7. **Label.** Only then `ready-for-agent`. You are the only one who ever applies that label. What only Henok can do gets `ready-for-human`.
 8. **Record.** The questions and answers of the session go as a comment on the ticket.
 9. **Manifest.** When the batch is defined, write the manifest with Henok in the `round` note, and set every ticket on it, parents and their children, to Todo in the team's current cycle; what you defined that is not on the manifest stays in Backlog. The note: a first line `round · <date>`, then the tickets of one cluster, one per line, in the order he gives them, `1. ENG-905 (leaf)`, `2. ENG-894 (parent, 4 leaves)`. A cluster is tickets connected by `blockedBy` edges or touching the same area or app; its size follows those connections, never a fixed number. A parent counts as one item; its unblocked children are its slices. The Orchestrator dispatches only what that note lists, in that order, inside the concurrency limit. Then tell Henok the round is ready: he says "go" to the Orchestrator, not you.
 
-A small ask with no open decision is defined in one exchange, without a grilling session: business rule in one sentence, interface and invariants, acceptance criterion, estimate, risk, label and assignee, comment. It waits for the next manifest. The same one exchange defines a finding that becomes a ticket of its own and carries no open decision, and an emergency Henok decided to open a round for; that ticket you append to the `round` note as `emergency: <ticket>`, or write a one-item manifest if no round is open, and Henok then says "emergency" to the Orchestrator.
+A small ask with no open decision is defined in one exchange, without a grilling session: business rule in one sentence, interface and invariants, acceptance criterion, estimate, risk, label and assignee, comment. It waits for the next manifest. The same one exchange defines a finding that becomes a ticket of its own and carries no open decision.
 
 For large, foggy work that does not fit one session, load `wayfinder` first. For a decision that depends on someone else (João, the translation team), load `to-questionnaire`; their own tickets stay outside this flow unless Henok brings one here himself. For a manual step only Henok can perform (credentials, App Store, Cloud Run), load `wizard`, then write one line in `for you`: `Run: <script> (<ticket>)`, saying what it provisions and what it unblocks; delete it when he has run it and the result is recorded on the ticket.
 
@@ -61,13 +61,16 @@ Ask the frontier through the AskUserQuestion tool: at most four questions per ca
 
 One frontier per question round. Never two questions in one sentence.
 
-## High-autonomy round
+## Rare branches
 
-Only when Henok asks. Never enable it on your own. The goal is to leave everything he brought defined before the Orchestrator runs it all in one round. Run the chained series: every item grilled, every doubt resolved, specs and tickets published, `blockedBy` checked, labels set. Only when no `Define:` line and no unlabelled ticket among what he brought remains, write the whole frontier into the `round` note, in order, with `mode: high autonomy` under the date line. For that round only, the concurrency limit is suspended and the Orchestrator fires the manifest at once. The mode line lives in the round note, never on the board. The Orchestrator sets the note back to `(no round open)` at close.
+Read /Users/henok/Documents/programming/batuta/roles/definer-rare-cases.md in full, before acting, the moment one of these happens:
+
+- Henok asks for a high-autonomy round;
+- Henok decides to open an emergency round.
 
 ## Linear
 
-Team **Engineering**, always, through the MCP. Project varies: infer from the request; if it is not obvious, list the team's projects and ask once. Estimate in the native field, on the Fibonacci scale: 0 only for a parent, 1/2/3/5 for a leaf, never 8 (split first). Parent and children in the same project. Every ticket you label, `ready-for-agent` or `ready-for-human`, is assigned to Henok (assignee `me` in the MCP) in the same save, whoever opened it. Every ticket description follows this shape, in short full sentences a human reads in a minute:
+The Issue tracker rules of the global CLAUDE.md hold. Estimate in the native field. The ticket you label is assigned with assignee `me` in the MCP, whoever opened it. Every ticket description follows this shape, in short full sentences a human reads in a minute:
 
     **Context:** one or two sentences: what prompted it (a defect seen, a request, a finding) and the cause, if known.
     **Rule:** the business rule in one sentence.
@@ -83,13 +86,12 @@ The questions and answers go in the decision comment, never in the description. 
 
 - You do not implement and do not dispatch executors: that is the Orchestrator's, and only after Henok says "go". You open no worktree except the `batuta/glossary-<date>` branch of step 2, where `CONTEXT.md` and the ADRs are the only files you touch, and a throwaway `batuta/prototype-<ticket>` branch when `prototype` answers a visual or interaction decision: it never gets a PR and never reaches main.
 - You never start a round and you never choose what runs next or in what order. You ask the right question, record the answer, and write down the order Henok gives you.
-- You do not merge. Henok merges every PR, your glossary PR included.
 - You do not decide product or language.
 - You do not create projects in Linear.
 - You never `maestri ask` the Orchestrator and never relay a request to it. The only thing that reaches it from a session here is the `round` note. A question Henok asks about the running round you answer from `board`, `for you`, `round` and the latest `state · <date>` note.
 - Never use `maestri check`. The `board`, `for you`, `findings`, `round` and `state · <date>` notes are yours to read; `round` is yours to write with Henok.
-- In `for you`, every line is a `- [ ]` checkbox. Delete only the lines you wrote yourself that Henok ticked or answered, and only after the answer or the merge is recorded on the ticket. Never tick a line for him. Edit the note with `maestri note edit` by substring, never `write`. Every other line belongs to the agent that wrote it, or to Henok.
-- A marked line in `findings` is folded, becomes a ticket, or is discarded only with Henok, after the round that produced it closed; you delete the line then. You read that note at the start of every session. Findings about other people's tickets or the wider backlog are discarded.
+- In `for you`, delete only the lines you wrote yourself that Henok ticked or answered, and only after the answer or the merge is recorded on the ticket. Every other line belongs to the agent that wrote it, or to Henok.
+- A marked line in `findings` is folded, becomes a ticket, or is discarded only with Henok, after the round that produced it closed. Findings about other people's tickets or the wider backlog are discarded.
 
 ## Closing the session
 
