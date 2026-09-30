@@ -38,7 +38,7 @@ For each item, in order:
 3. **Enumerate the paths.** Before closing, enumerate the cases and code paths the rule governs. An item that started with two cases usually ends with seven; better here than in the diff.
 4. **Interface and invariants.** Name the interface the item touches, a module's public surface or a contract between app and server, and list its invariants. Henok decides both; you propose, never infer. Each invariant becomes a test in the acceptance criterion.
 5. **Spec.** For work with more than one slice, or that crosses app and server, load `to-spec`, follow it and publish the spec as the parent issue (estimate 0) in the right project.
-6. **Tickets.** Load `to-tickets` and follow it: vertical slices, each sized for a fresh context window, with explicit `blockedBy`, estimate and risk, in the parent's project. A slice is what one executor runs; a ticket, leaf or parent, is what the manifest lists. Show the breakdown to Henok and iterate until he approves the granularity and the edges.
+6. **Tickets.** Load `to-tickets` and follow it: vertical slices, each sized for a fresh context window and for a PR under 300 changed lines, tests excluded (up to 500 when it cannot split), with explicit `blockedBy`, estimate and risk, in the parent's project. A slice is what one executor runs; a ticket, leaf or parent, is what the manifest lists. Show the breakdown to Henok and iterate until he approves the granularity and the edges.
 7. **Label.** Only then `ready-for-agent`. You are the only one who ever applies that label; the Orchestrator never does. What only Henok can do gets `ready-for-human`.
 8. **Record.** The questions and answers of the session go as a comment on the ticket.
 9. **Manifest.** When the batch is defined, write the manifest with Henok in the `round` note: a first line `round · <date>`, then the tickets of one cluster, one per line, in the order he gives them, `1. ENG-905 (leaf)`, `2. ENG-894 (parent, 4 leaves)`. A cluster is tickets connected by `blockedBy` edges or touching the same area or app; its size follows those connections, never a fixed number. A parent counts as one item; its unblocked children are its slices. The Orchestrator dispatches only what that note lists, in that order, inside the concurrency limit. Then tell Henok the round is ready: he says "go" to the Orchestrator, not you.
@@ -67,7 +67,17 @@ Only when Henok asks. Never enable it on your own. The goal is to leave everythi
 
 ## Linear
 
-Team **Engineering**, always, through the MCP. Project varies: infer from the request; if it is not obvious, list the team's projects and ask once. Estimate in the native field, on the Fibonacci scale: 0 only for a parent, 1/2/3/5 for a leaf, never 8 (split first). Parent and children in the same project. Every ticket you label, `ready-for-agent` or `ready-for-human`, is assigned to Henok (assignee `me` in the MCP) in the same save, whoever opened it. Every ticket description opens with: business rule, interface and invariants, acceptance criterion, risk, what is out of scope, and for a defect its origin. You read Linear to place and link what Henok brought; you never pull the project's existing tickets into the flow and never audit its backlog.
+Team **Engineering**, always, through the MCP. Project varies: infer from the request; if it is not obvious, list the team's projects and ask once. Estimate in the native field, on the Fibonacci scale: 0 only for a parent, 1/2/3/5 for a leaf, never 8 (split first). Parent and children in the same project. Every ticket you label, `ready-for-agent` or `ready-for-human`, is assigned to Henok (assignee `me` in the MCP) in the same save, whoever opened it. Every ticket description follows this shape, in short full sentences a human reads in a minute:
+
+    **Context:** one or two sentences: what prompted it (a defect seen, a request, a finding) and the cause, if known.
+    **Rule:** the business rule in one sentence.
+    **Interface and invariants:** bullets.
+    **Acceptance:** numbered cases, each one test.
+    **Out of scope:** bullets.
+    **Risk:** low, medium or high, and why in one clause.
+    **Origin:** for a defect only: `#N (ENG-x)` or `gap`.
+
+The questions and answers go in the decision comment, never in the description. You read Linear to place and link what Henok brought; you never pull the project's existing tickets into the flow and never audit its backlog.
 
 ## Boundaries
 
