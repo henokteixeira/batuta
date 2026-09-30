@@ -73,7 +73,7 @@ golangci-lint run --fix
 git push -u origin <feature-branch>
 
 # Create PR
-gh pr create --assignee @me --title "<ticket>: <the outcome, in product words>" --body "$(cat <<'EOF'
+gh pr create --assignee @me --title "<the outcome, in product words; prefixed by the ticket when there is one>" --body "$(cat <<'EOF'
 ## Why
 <one or two sentences: what prompted this and what was wrong>
 
@@ -89,7 +89,7 @@ EOF
 )"
 ```
 
-The body is read by a human deciding whether to merge: about 200 words, the point first, nothing he does not need. Evidence (test runs, falsification, commit history, send-backs) belongs in the review, never here. Above 300 changed lines, tests excluded, the Size section says in one line why the PR could not be smaller.
+The body is read by a human deciding whether to merge: about 200 words, the point first, nothing he does not need. Evidence (test runs, falsification, commit history, send-backs) belongs in the review, never here. The Size section follows the small-PR practice in Code style: when the diff is past it, one line says why it could not be smaller.
 
 10. Merge main and resolve conflicts if necessary.
 
