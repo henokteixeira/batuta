@@ -30,7 +30,7 @@ Enumerating the paths is mandatory: before closing the contract, list the code p
 
 1. **Task list:** add each element of the CLAUDE.md checklist to the session's task list before touching a file.
 2. **Recon**, and the question round if a decision is open.
-3. **Tests first.** Load `test-driven-development`, then turn the Testing Plan into real tests, one numbered case at a time: every case becomes at least one test whose name states the case in the glossary's words, and two cases never share a test. Run them and watch each fail for the right reason: a test that errors on an import, or passes on arrival, has not been watched fail. The expected value of every test comes from the spec, never from the code. Load `testing-anti-patterns` before any mock.
+3. **Tests first.** Load `test-driven-development`, then turn the Testing Plan into real tests, one numbered case at a time: every case has at least one test whose name states it in the glossary's words, and no test covers two cases. Run them and watch each fail for the right reason: a test that errors on an import, or passes on arrival, has not been watched fail. The expected value of every test comes from the spec, never from the code. Load `testing-anti-patterns` before any mock.
 4. **Minimal implementation** that turns the tests green, then refactor for shape. Small modules with a simple interface over rich logic.
 5. **Manual falsification of every test:** comment out the fix, watch the test go red, restore it. Record it in the report, test by test. A test that does not go red with the fix commented out is not a gate. The Orchestrator runs this again itself, so your record is what it checks its run against.
 6. **Test and implementation in the same commit.**

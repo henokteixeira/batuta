@@ -70,7 +70,7 @@ Decide per ticket, without asking. Effort starts low.
 | estimate 1 or 2, low risk, no domain rule | sonnet | low |
 | estimate 3 | sonnet | medium |
 | estimate 5, high risk, or touches a domain rule, a model prompt, a cascade in the database | opus | medium |
-| spec-faithfulness review (nori-code-reviewer subagent) | opus | high |
+| the three-axis review of `code-review` | opus | high |
 
 Never haiku. Record the chosen model on the board.
 
@@ -108,8 +108,8 @@ When an executor grills, copy the whole frontier into `for you`, one line per qu
 
 - Read the whole diff.
 - Run the full suite, the formatter, the linter and the typechecker in the worktree.
-- Falsify the tests yourself; the report is a claim. In the worktree, `git checkout <the plan's source branch> -- <the diff's paths that are not tests>`, run the suite and watch every test the slice added go red; then `git checkout HEAD -- <the same paths>` and confirm green. A test that stays green with the change gone goes back to the executor, named. A diff that touches only tests has nothing to revert, and your review says so.
-- Confirm the Testing Plan's cases and the tests map one to one by name: a case may need several tests, two cases never share one, no case is left without one.
+- Falsify the tests yourself; the report is a claim. In the worktree, with `BASE=$(git merge-base HEAD <the plan's source branch>)`, revert the change but keep its tests: `git diff $BASE HEAD -- <the diff's paths that are not tests> | git apply -R`. Run the suite and watch every test the slice added or changed go red; then `git checkout HEAD -- <the same paths>` and confirm `git status` is clean and the suite green. A test that stays green with the change gone goes back to the executor, named. A diff that touches only tests has nothing to revert, and your review says so.
+- Confirm every case of the Testing Plan has at least one test named for it, and no test covers two cases.
 - Run the review of `code-review` on opus with the spec and the ticket, on its three axes: standards, faithfulness to the spec, and attack. A diff that passes the tests and breaks the rule does not pass here, and neither does one an attack scenario breaks.
 - Confirm the decision was recorded: an ADR if irreversible, `CONTEXT.md` if a term changed.
 - Wait for CI with `gh pr checks --watch`. Red goes back to the same executor, even if the slice did not cause it. A red that needs its own ticket is a finding.

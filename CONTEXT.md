@@ -107,7 +107,7 @@ The Definer's standing as the single entry for everything Henok brings. Nothing 
 _Avoid_: intake, triage, entry point
 
 **Orchestrator**:
-The terminal that runs the round: it dispatches the manifest in order, verifies what comes back, and never edits a repository. Orquestrador on the canvas.
+The terminal that runs the round: it dispatches the manifest in order, verifies what comes back, and never edits a repository; reverting a slice's change for a moment to watch its tests fail is verifying, not editing. Orquestrador on the canvas.
 _Avoid_: manager, dispatcher, lead, queue runner
 
 **Executor**:
