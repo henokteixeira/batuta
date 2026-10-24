@@ -84,12 +84,12 @@ gh pr create --assignee @me --title "<the outcome, in product words; prefixed by
 1. <step> → <what you should see>
 
 ## Size
-+<added> −<removed> lines, tests excluded.
++<added> −<removed> hand-written lines, tests included. Generated: <files, or none>.
 EOF
 )"
 ```
 
-The body is read by a human deciding whether to merge: about 200 words, the point first, nothing he does not need. Evidence (test runs, falsification, commit history, send-backs) belongs in the review, never here. The Size section follows the small-PR practice in Code style: when the diff is past it, one line says why it could not be smaller.
+The body is read by a human deciding whether to merge: about 200 words, the point first, nothing he does not need. Evidence (test runs, falsification, commit history, send-backs) belongs in the review, never here. The Size section follows the 300-line ceiling in Code style; generated files are listed so the reader can skip them.
 
 10. Merge main and resolve conflicts if necessary.
 
