@@ -123,4 +123,6 @@ If CI did not pass, examine why and fix the issue.
 
 12. If this was a change to a webapp, spin up the server and the ui in a demo localhost link and show me the link so that I can review the changes.
 <system-reminder> If you are in a worktree, make sure you copy any gitignored env or config files that are necessary to start the server </system-reminder>
+
+13. If you worked in a worktree, end by asking me to delete it, to free disk space. On yes, and only once the branch is pushed: `git worktree remove <path>` from the main checkout, then `git branch -D <branch>`.
 </required>
