@@ -74,11 +74,16 @@ git push -u origin <feature-branch>
 
 # Create PR
 gh pr create --assignee @me --title "<the outcome, in product words; prefixed by the ticket when there is one>" --body "$(cat <<'EOF'
+**<ticket>** · track: <light|full> · risk: <low|medium|high> · [review](<link to the Reviewer's or the bot's review, once posted>)
+
 ## Why
-<one or two sentences: what prompted this and what was wrong>
+<the ticket's rule, as Henok confirmed it> — <what was wrong or missing>
 
 ## What changes
 - <at most three bullets, in product words, no code identifiers>
+
+## Where to look
+<file:line of the critical code and why a mistake there costs; or "nothing critical">
 
 ## Test by hand
 1. <step> → <what you should see>
@@ -89,7 +94,7 @@ EOF
 )"
 ```
 
-The body is read by a human deciding whether to merge: about 200 words, the point first, nothing he does not need. Evidence (test runs, falsification, commit history, send-backs) belongs in the review, never here. The Size section follows the 300-line ceiling in Code style; generated files are listed so the reader can skip them.
+The body is read by a human deciding whether to merge: about 200 words, the point first, nothing he does not need. Evidence (test runs, falsification, commit history, send-backs) belongs in the review, never here; alternatives discarded belong in the ticket's decision comment, unless one was contested, then one line under Why. The Size section follows the 300-line ceiling in Code style; generated files are listed so the reader can skip them.
 
 10. Merge main and resolve conflicts if necessary.
 

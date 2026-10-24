@@ -25,7 +25,7 @@ A manifest ticket without `ready-for-agent`, or with a blocker outside the manif
 3. Two tickets whose **Touches** share a source file run in series: the later one is a held slice, dispatched only after the earlier PR merges, from the updated main. Check with `gh pr view <N> --json state,mergedAt`.
 4. When an executor reports a PR: full track, recruit a reviewer on the same worktree and send it the ticket and the PR. In shemaobt, both tracks: `gh pr edit <N> --add-reviewer joaocarvoli`, which wakes the GitHub review.
 5. A review finding goes back to its executor with `maestri ask`. You do not judge it; the executor fixes it or answers on the PR.
-6. When no finding is open and CI is green (`gh pr checks --watch`), or for a light-track PR in a repository with no automated review, once CI is green: mark the PR ready, set the ticket In Review, write `Review and merge <PR URL> — <ticket> (unblocks: …)` in `for you`, restart the executor and the reviewer.
+6. When no finding is open and CI is green (`gh pr checks --watch`), or for a light-track PR in a repository with no automated review, once CI is green: put the review's link in the PR header, mark the PR ready, set the ticket In Review, write `Review and merge <PR URL> — <ticket> (unblocks: …)` in `for you`, restart the executor and the reviewer.
 7. When every item is merged or waiting Henok and no slice is held, close the round.
 
 ## Concurrency limit
