@@ -74,7 +74,7 @@ Irreversible, money, production, third-party API, auth, product or language deci
 
 ## Merge
 
-Only Henok merges. Learn of a merge with `gh pr view <N> --json state,mergedAt,reviews`. `R: changes: <what>` or a changes request from Henok: `gh pr ready <N> --undo`, re-dispatch the ticket to a fresh executor with his words. After a merge, post the decision record on the ticket (questions, answers, what was decided without him) and set it Done.
+Only Henok merges. Learn of a merge with `gh pr view <N> --json state,mergedAt,reviews`. `R: changes: <what>` or a changes request from Henok: `gh pr ready <N> --undo`, re-dispatch the ticket to a fresh executor with his words. After a merge, post the decision record on the ticket (questions, answers, what was decided without him), set it Done, and remove the slice's worktree and local branch to free disk space: the merge is Henok's yes.
 
 ## Closing the round
 
