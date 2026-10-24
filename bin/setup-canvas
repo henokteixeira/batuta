@@ -1,5 +1,5 @@
 #!/bin/bash
-# Run inside the Orchestrator terminal of a Batuta workspace, with Maestro Mode on; rerun after a change to a template or a routine prompt.
+# Run inside the Orchestrator terminal of a Batuta workspace, with Maestro Mode on; rerun to clean what an older workflow left.
 set -u
 B="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 DEFINER="${DEFINER:-Definidor}"
@@ -11,49 +11,29 @@ fi
 have() { echo "$LIST" | grep -q "name: \"$1\""; }
 template() { cat "$B/templates/notes/$1.md"; }
 
-for old in painel "pra você" achados "como funciona"; do
+for old in painel "pra você" achados "como funciona" board "how it works"; do
   if have "$old"; then maestri note delete "$old" >/dev/null 2>&1 && echo "removed note '$old'"; fi
 done
 
-for n in board "for you" findings "how it works" round; do
+for n in "for you" findings round; do
   if ! have "$n"; then
     maestri note create "$(template "$n")" --name "$n" >/dev/null 2>&1 && echo "created note '$n'"
-  elif [ "$n" = "how it works" ]; then
-    maestri note write "$n" "$(template "$n")" >/dev/null 2>&1 && echo "refreshed note '$n'"
   else
     echo "note '$n' already there"
   fi
 done
 
 if echo "$LIST" | grep -q "name: \"$DEFINER\""; then
-  for n in board "for you" findings "how it works" round; do
+  for n in "for you" findings round; do
     maestri connect "$n" "$DEFINER" >/dev/null 2>&1 && echo "wired '$n' <-> '$DEFINER'"
   done
 else
   echo "no terminal named '$DEFINER' is connected to you: wire the Definer to this terminal in the canvas and run again for the ropes"
 fi
 
-MORNING="Start of day. Read the latest 'state ·' note in the logs stack and the 'round' note. If the round note says no round open, write one line in the board, 'no round open, waiting for a manifest', and stop. Otherwise read only the tickets named in the manifest; do not list, search or label anything else in Linear. Delete from 'for you' every line you wrote that Henok ticked or answered, after recording his answer or his merge on the ticket, editing the note by substring; never tick a line for him, and keep only what still waits on him. Write four lines in the board: which manifest items are in flight, which wait for Henok, which are held behind a PR, which have not started. Dispatch only a held slice whose earlier PR has merged, inside the concurrency limit, as the role says; nothing else: only Henok's 'go' opens a round."
-EVENING="Evening check. If the 'round' note says no round open, or a 'state ·' note already closed it, do nothing. Otherwise check each manifest item: merged, waiting Henok (a line in 'for you' counts), held behind a PR, or still in flight. If any item is still in flight or held, write one line in the board with the status and stop; the round stays open. If every item is merged or waiting Henok, close the round as the role says: decisions on the tickets, each finding marked candidate or discard, the 'state · <today>' note in the logs stack with its retro, the round note set back to '(no round open)', and end with TASK_COMPLETE or BLOCKED: waiting on Henok. Do not start new work."
-REMINDER="Batuta: 'for you' holds only what still waits on you: answers, approvals, PRs to review and merge. Anything there?"
-
 ROUTINES=$(maestri routine list 2>&1)
-scheduled() { echo "$ROUTINES" | grep -q "$1"; }
-routine() {
-  local name=$1 command=$2; shift 2
-  if scheduled "$name"; then
-    maestri routine edit "$name" --command "$command" >/dev/null 2>&1 && echo "routine '$name' refreshed"
-  else
-    maestri routine create "$name" "$@" --command "$command" >/dev/null 2>&1 && echo "routine '$name' created"
-  fi
-}
+for old in "morning state" "evening handoff" "evening round check" "for you reminder"; do
+  if echo "$ROUTINES" | grep -qE "(^|[^[:alnum:] ])$old([^[:alnum:] ]|$)"; then maestri routine delete "$old" >/dev/null 2>&1 && echo "removed routine '$old'"; fi
+done
 
-routine "morning state" "$MORNING" --daily 08:30
-if scheduled "evening handoff" && ! scheduled "evening round check"; then
-  maestri routine edit "evening handoff" --name "evening round check" --command "$EVENING" >/dev/null 2>&1 && echo "routine 'evening handoff' renamed to 'evening round check' and refreshed"
-else
-  routine "evening round check" "$EVENING" --daily 18:30
-fi
-routine "for you reminder" "$REMINDER" --weekly mon,tue,wed,thu,fri@12:00 --reminder
-
-echo; maestri list; echo; maestri routine list
+echo; maestri list

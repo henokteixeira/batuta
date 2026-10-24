@@ -7,3 +7,5 @@ Every gate asked whether the code does what the spec asked, so a case the spec n
 This comes from the unmerged branch `review-gaps` of 2026-09-16. Henok took these two groups and left out the silence pass before labelling, the thing to try that should fail in Test by hand, the case against on `Approve:` lines, and the `read the diff` clause.
 
 Considered options: the reviewer delivering a failing test instead of prose, rejected for now because it costs a run per finding; mutation testing, left to the repositories under review.
+
+Amended 2026-10-24 by ADRs 0012 and 0013: the Reviewer, with no author context, runs the attack axis and falsifies only the tests of critical code.

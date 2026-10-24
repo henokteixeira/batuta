@@ -13,3 +13,7 @@ Read now, with the Read tool, the file /Users/henok/Documents/programming/batuta
 ## Executor
 
 Read now, with the Read tool, the file /Users/henok/Documents/programming/batuta/roles/executor.md and follow it as your role in this session. Reread it after any compaction.
+
+## Revisor (Reviewer)
+
+Read now, with the Read tool, the file /Users/henok/Documents/programming/batuta/roles/reviewer.md and follow it as your role in this session. Reread it after any compaction.

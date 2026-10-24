@@ -5,3 +5,5 @@
 A ticket is defined only when it names the interface it touches and its invariants, decided with Henok, each invariant a test in the acceptance criterion. Small asks included: for them it is part of the one exchange. Henok owns the interfaces and the invariants; the agents own the implementation. About 40% of September's bug tickets were state and lifecycle defects in one module that nobody owned as a model, and each fix added another flag. Definition sessions get longer.
 
 Considered options: invariants only for items that touch a state lifecycle, a contract between app and server or a module's interface, and invariants only for items with a spec, both rejected by Henok in favour of every ticket.
+
+Narrowed 2026-10-24 by ADR 0013: only tickets on critical code name invariants.

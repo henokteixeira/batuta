@@ -1,23 +1,19 @@
 # Orchestrator: rare branches — Batuta
 
-Part of your role, `roles/orchestrator.md`. Each section is one branch; follow it whole when it happens.
+Only the point. Few words. No preamble.
 
-## High-autonomy round
-
-Only when the round note carries `mode: high autonomy` under its date, written by the Definer at Henok's request. The manifest is then the whole frontier the Definer closed with him; the concurrency limit is suspended for that round only, and you fire the manifest at once with `maestri ask --batch`, except held slices, which still wait for the merge. The mode line lives in the round note, never on the board, and never survives the round: the note goes back to `(no round open)` at close.
-
-## A PR Henok closes without merging
-
-A PR he closes without merging: his reason goes as a comment on the ticket, and the ticket goes back to the Definer.
-
-If it is the earlier PR a held slice waits behind, the held slice stops holding the round: it goes back to the Definer with that PR's ticket, as `held behind PR #N: <ticket>` in the state note.
+Part of your role, `roles/orchestrator.md`. Follow a section whole when it happens.
 
 ## Production emergency
 
-A production emergency is one of four measured facts, never a judgement: production is down or returning errors to users; production data is being lost or corrupted; a secret or personal data is exposed; money is being spent or charged wrongly. Anything else that looks urgent is a finding.
+One of four measured facts: production down or returning errors to users; production data lost or corrupted; a secret or personal data exposed; money spent or charged wrongly. Anything else is a finding.
 
-On an emergency you, or an executor through you, write one line in `for you`: `Emergency: <the measured fact, one sentence>. Open an emergency round? Recommend <yes|no>.` and do nothing else: no ticket, no label, no fix, no remount, no dispatch. Henok decides. If he opens one, the Definer defines the ticket in one exchange and appends `emergency: <ticket>` to the round note, and Henok says `emergency` to you. Then you dispatch that slice next, ahead of the manifest order, inside the concurrency limit. It closes with the round.
+Write one line in `for you`: `Emergency: <the fact>. Open an emergency slice? Recommend <yes|no>.` Do nothing else. If Henok opens one, the Definer defines the ticket and appends `emergency: <ticket>` to the round note; on Henok's `emergency` you dispatch it next, inside the concurrency limit.
+
+## A PR Henok closes without merging
+
+His reason goes on the ticket, and the ticket goes back to the Definer. A slice held behind that PR goes back too, as `held behind PR #N: <ticket>` in the state note.
 
 ## `close the round` with a slice still working
 
-`close the round` with a slice still working: a slice in reviewing, PR open or CI finishes to a verified PR and is recorded as waiting Henok. A slice before that stops. Restart its executor, leave its plan and its worktree on disk, write `not finished: <ticket>, plan at <path>` in the state note, and the ticket goes back to the Definer for the next manifest. A held slice not yet dispatched is written `held behind PR #N: <ticket>` and goes back the same way. A stopped slice never resumes by itself.
+A slice with a PR open finishes to waiting Henok. Any other slice stops: restart its executor, keep its worktree, write `not finished: <ticket>, worktree at <path>` in the state note. A held slice is written `held behind PR #N: <ticket>`. Both go back to the Definer.

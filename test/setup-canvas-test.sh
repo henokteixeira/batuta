@@ -33,59 +33,53 @@ MAESTRO='You:
 Connected agents:
   - name: "Definidor"'
 NOTES='Notes:
-  - name: "board"
   - name: "for you"
   - name: "findings"
-  - name: "how it works"
   - name: "round"'
 OLD='Notes:
   - name: "painel"
   - name: "pra você"
   - name: "achados"
-  - name: "como funciona"'
+  - name: "como funciona"
+  - name: "board"
+  - name: "how it works"'
 
 echo "# fresh workspace cloned from an old one"
 rc=$(run "$MAESTRO
 $OLD" "")
 check "exits 0" "$rc" 0
-for n in painel "pra você" achados "como funciona"; do
+for n in painel "pra você" achados "como funciona" board "how it works"; do
   check "deletes old note '$n'" "$(line "note ⟨ delete ⟨ $n ⟨ ")" 1
 done
-for n in board "for you" findings "how it works" round; do
+for n in "for you" findings round; do
   check "creates note '$n' from its template" "$(line "note ⟨ create ⟨ $(flat "$ROOT/templates/notes/$n.md") ⟨ --name ⟨ $n ⟨ ")" 1
   check "wires '$n' to the Definer" "$(line "connect ⟨ $n ⟨ Definidor ⟨ ")" 1
 done
 check "recruits no terminal" "$(calls "^recruit ⟨ ")" 0
-check "wires nothing but the five notes" "$(calls "^connect ⟨ ")" 5
-for r in "morning state" "evening round check" "for you reminder"; do
-  check "creates routine '$r'" "$(calls "^routine ⟨ create ⟨ $r ⟨ ")" 1
-done
-check "edits no routine" "$(calls "^routine ⟨ edit ⟨ ")" 0
+check "wires nothing but the three notes" "$(calls "^connect ⟨ ")" 3
+check "creates no routine" "$(calls "^routine ⟨ create ⟨ ")" 0
 
-echo "# populated workspace with the old evening routine name and a leftover voice terminal"
+echo "# populated workspace with the old routines and a leftover voice terminal"
 rc=$(run "$MAESTRO
   - name: \"voice\"
 $NOTES" "morning state
 evening handoff
+evening round check
 for you reminder")
 check "exits 0" "$rc" 0
 check "creates no note" "$(calls "^note ⟨ create ⟨ ")" 0
-check "deletes no note" "$(calls "^note ⟨ delete ⟨ ")" 0
+check "deletes no live note" "$(calls "^note ⟨ delete ⟨ ")" 0
+check "overwrites no note" "$(calls "^note ⟨ write ⟨ ")" 0
 check "leaves a leftover voice terminal alone" "$(calls "^connect ⟨ voice ⟨ ")" 0
-check "rewrites 'how it works' from its template" "$(line "note ⟨ write ⟨ how it works ⟨ $(flat "$ROOT/templates/notes/how it works.md") ⟨ ")" 1
-check "rewrites nothing else" "$(calls "^note ⟨ write ⟨ ")" 1
-check "creates no routine" "$(calls "^routine ⟨ create ⟨ ")" 0
-check "refreshes 'morning state'" "$(calls "^routine ⟨ edit ⟨ morning state ⟨ --command ⟨ ")" 1
-check "renames and refreshes 'evening handoff'" "$(calls "^routine ⟨ edit ⟨ evening handoff ⟨ --name ⟨ evening round check ⟨ --command ⟨ ")" 1
-check "refreshes 'for you reminder'" "$(calls "^routine ⟨ edit ⟨ for you reminder ⟨ --command ⟨ ")" 1
+for r in "morning state" "evening handoff" "evening round check" "for you reminder"; do
+  check "deletes old routine '$r'" "$(line "routine ⟨ delete ⟨ $r ⟨ ")" 1
+done
+check "creates or edits no routine" "$(calls "^routine ⟨ (create|edit) ⟨ ")" 0
 
-echo "# populated workspace with the current routine names"
+echo "# workspace with a routine of Henok's whose name contains an old one"
 run "$MAESTRO
-$NOTES" "morning state
-evening round check
-for you reminder" >/dev/null
-check "refreshes 'evening round check' in place" "$(calls "^routine ⟨ edit ⟨ evening round check ⟨ --command ⟨ ")" 1
-check "renames nothing" "$(calls "^routine ⟨ edit ⟨ .*--name ⟨ ")" 0
+$NOTES" "morning state digest" >/dev/null
+check "keeps a routine that only contains an old name" "$(calls "^routine ⟨ delete ⟨ ")" 0
 
 echo "# terminal without Maestro Mode"
 rc=$(run 'You:
