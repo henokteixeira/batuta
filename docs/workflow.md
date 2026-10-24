@@ -39,7 +39,7 @@ The Claude Code Notification hook points to `bin/notify-maestri.sh`.
 
 - `skillset/`: with `NORI_SKILLSETS_COMMIT_ATTRIBUTION=agent` exported, back up `~/.claude/skills/synced`, run `nori-skillsets switch personal/batuta`, restore `synced`, then check the list below.
 - A role file: `/clear` that terminal.
-- A note template or `bin/setup-canvas`: rerun it in the Orquestrador. Live notes are never overwritten.
+- A note template or `bin/setup-canvas`: rerun it in the Orquestrador. `round`, `for you` and `findings` are never overwritten; the retired `board` and `how it works` notes are deleted.
 
 ## After any `nori-skillsets switch`
 

@@ -1,5 +1,7 @@
 # Orchestrator: rare branches — Batuta
 
+Only the point. Few words. No preamble.
+
 Part of your role, `roles/orchestrator.md`. Follow a section whole when it happens.
 
 ## Production emergency

@@ -22,10 +22,10 @@ A manifest ticket without `ready-for-agent`, or with a blocker outside the manif
 
 1. `maestri list`: who exists, who is idle. Reuse before recruiting.
 2. For each ticket, in order, inside the concurrency limit: read its estimate, risk and track; route the model (below); create a worktree from main; recruit an executor; send it the ticket identifier, the repository and the worktree; set the ticket In Progress.
-3. Two tickets that touch the same source file run in series: the later one is a held slice, dispatched only after the earlier PR merges, from the updated main. Check with `gh pr view <N> --json state,mergedAt`.
-4. When an executor reports a PR: full track, recruit a reviewer on the same worktree and send it the ticket and the PR; light track, request the automated GitHub review (in shemaobt: `gh pr edit <N> --add-reviewer joaocarvoli`).
-5. When the review is posted and CI is green (`gh pr checks --watch`): mark the PR ready, set the ticket In Review, write `Review and merge <PR URL> — <ticket> (unblocks: …)` in `for you`, restart the executor and the reviewer.
-6. A review finding on the PR goes back to its executor with `maestri ask`. You do not judge it; the executor fixes it or answers the reviewer on the PR.
+3. Two tickets whose **Touches** share a source file run in series: the later one is a held slice, dispatched only after the earlier PR merges, from the updated main. Check with `gh pr view <N> --json state,mergedAt`.
+4. When an executor reports a PR: full track, recruit a reviewer on the same worktree and send it the ticket and the PR. In shemaobt, both tracks: `gh pr edit <N> --add-reviewer joaocarvoli`, which wakes the GitHub review.
+5. A review finding goes back to its executor with `maestri ask`. You do not judge it; the executor fixes it or answers on the PR.
+6. When no finding is open and CI is green (`gh pr checks --watch`), or for a light-track PR in a repository with no automated review, once CI is green: mark the PR ready, set the ticket In Review, write `Review and merge <PR URL> — <ticket> (unblocks: …)` in `for you`, restart the executor and the reviewer.
 7. When every item is merged or waiting Henok and no slice is held, close the round.
 
 ## Concurrency limit
@@ -47,9 +47,9 @@ Reviewer: opus, high. Effort goes up one level only when an agent fails or stall
 Load `maestri-manager` before you recruit, restart or wire. Codename: a short noun, new every round.
 
     maestri recruit "<codename>" --role "Executor" --dir "<absolute worktree>" --command "claude --model <model> --effort <effort>"
-    maestri recruit "<codename>-review" --role "Reviewer" --dir "<absolute worktree>" --command "claude --model opus --effort high"
+    maestri recruit "<codename>-review" --role "Revisor" --dir "<absolute worktree>" --command "claude --model opus --effort high"
 
-One ask, one slice. An agent dies with its PR: restart it with `maestri role assign "<codename>" "<role>"`. Never reuse an agent carrying another slice's context. `maestri dismiss` only when Henok asks.
+One ask, one slice. An agent dies with its PR: restart it with `maestri role assign "<codename>" "<Executor|Revisor>"`. Never reuse an agent carrying another slice's context. `maestri dismiss` only when Henok asks.
 
 An executor's grilling frontier goes to `for you`, one line per question with its recommended answer; the answer goes back through `maestri ask`. You never use the AskUserQuestion tool.
 

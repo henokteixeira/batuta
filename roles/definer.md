@@ -25,7 +25,8 @@ A ticket gets `ready-for-agent` only when it has all of:
 5. a track: **light** for estimate 1 or 2, low risk and no domain rule; **full** otherwise. You propose, Henok confirms;
 6. its blockers as `blockedBy`;
 7. for critical code (a domain rule, money, data, auth, state and lifecycle): the interface it touches and its invariants, decided by Henok, each one a test;
-8. a size that fits one PR of at most 300 hand-written lines, tests included. If it does not fit, split it.
+8. a size that fits one PR of at most 300 hand-written lines, tests included. If it does not fit, split it;
+9. the source files it will touch, so the Orchestrator can run tickets that share one in series.
 
 ## The session
 
@@ -58,6 +59,7 @@ Every description, in short sentences:
     **Track:** light or full.
     **Invariants:** critical code only, bullets.
     **Acceptance:** numbered cases, each one test.
+    **Touches:** the source files it changes.
     **Out of scope:** bullets.
     **Risk:** low, medium or high, and why.
     **Origin:** for a defect only: `#N (ENG-x)` or `gap`.

@@ -34,7 +34,7 @@ Send it with `maestri ask "<Orchestrator>" "..."` and stop:
 
 - PR URL
 - the suite output, pasted
-- the critical tests you falsified by hand, and the result
+- light track: the critical tests you falsified by hand, and the result
 - what you could not verify
 - pre-existing defects, one line each
 

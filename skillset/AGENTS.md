@@ -12,7 +12,7 @@
 - If any decision is still open: read and follow `{{skills_dir}}/grilling/SKILL.md`, then WAIT. Never assume. Facts are yours to find; only decisions go to the human. Before closing, enumerate the code paths the change governs.
 - Full track: read and follow `{{skills_dir}}/writing-plans/SKILL.md`.
 - Read and follow `{{skills_dir}}/test-driven-development/SKILL.md` under the Tests rules below. Each test goes red before its implementation.
-- Critical code: falsify each of its tests by hand: comment out the fix, watch the test go red, restore it. Test and implementation land in the same commit.
+- Critical code: its tests are falsified by hand, once: comment out the fix, watch the test go red, restore it. On the full track the reviewer does it; otherwise you do. Test and implementation land in the same commit.
 - Full track: read and follow `{{skills_dir}}/test-scenario-hygiene/SKILL.md`.
 - Record decisions, not code: an ADR under `docs/adr/` if the decision is hard to reverse, an `AGENTS.md` line if a command or convention changed. Read `{{skills_dir}}/domain-modeling/SKILL.md` for the formats. `CONTEXT.md` changes only when the human asks for a term.
 - Review by fresh eyes, never your own. Full track: a reviewer without your context runs `{{skills_dir}}/code-review/SKILL.md` with only the ticket and the diff: in a Batuta workspace the Reviewer, otherwise a fresh subagent. Light track: the repository's automated GitHub review, if it has one.

@@ -76,6 +76,11 @@ for r in "morning state" "evening handoff" "evening round check" "for you remind
 done
 check "creates or edits no routine" "$(calls "^routine ⟨ (create|edit) ⟨ ")" 0
 
+echo "# workspace with a routine of Henok's whose name contains an old one"
+run "$MAESTRO
+$NOTES" "morning state digest" >/dev/null
+check "keeps a routine that only contains an old name" "$(calls "^routine ⟨ delete ⟨ ")" 0
+
 echo "# terminal without Maestro Mode"
 rc=$(run 'You:
   - name: "Claude Code", maestro: false' "")

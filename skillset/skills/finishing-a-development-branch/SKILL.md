@@ -60,7 +60,7 @@ golangci-lint run --fix
 
 5. Use the Task tool to run type checking and fix issues in a subagent.
 
-6. Use the nori-code-reviewer subagent to do a self review. You do *NOT* have to follow the subagent's suggestions. This is merely a way to get a fresh pair of eyes on the code.
+6. Skip any self review: review comes from fresh eyes, as the global CLAUDE.md says.
 
 7. Run the test-scenario-hygiene skill in a subagent to do test review. You do *NOT* have to follow the subagent's suggestions. This is merely a way to get a fresh pair of eyes on the code.
 

@@ -120,7 +120,6 @@ _Avoid_: lane, tier, mode
 A domain rule, money, data, auth, or state and lifecycle. It gets a test per invariant, and its tests are falsified by hand.
 _Avoid_: core, important code, hot path
 
-
 **Small ask**:
 Something Henok wants that carries no open decision. The Definer defines it in one exchange, with Henok confirming its rule, and it waits for the next manifest.
 _Avoid_: quick fix, tiny task, drive-by
