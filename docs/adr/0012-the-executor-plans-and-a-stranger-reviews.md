@@ -7,3 +7,5 @@ Every hop between agents lost information: the Orchestrator rewrote each ticket 
 The round machinery shrank with it: the board and "how it works" notes, the three routines, the high-autonomy round and the Orchestrator's own falsification are gone. The manifest, "for you", findings, held slices (ADR 0008) and in-round fixes stay.
 
 Considered options: two roles, with the Definer dispatching, rejected because the Definer would carry execution context again; Henok dispatching by hand, rejected as manual work with no gain.
+
+Amended 2026-10-28: the high-autonomy round is back, at Henok's request. When the round note says so, the concurrency limit gives way to the machine's free memory; held slices and the one-grilling limit stay.

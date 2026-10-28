@@ -36,7 +36,7 @@ A ticket gets `ready-for-agent` only when it has all of:
 4. **Tickets.** Load `to-tickets`: vertical slices, each one PR, with `blockedBy`, estimate, risk and track, in the shape below. Work with more than one slice gets a parent (estimate 0) that groups them; the rule lives on the tickets, never in a separate spec. Show the breakdown and iterate until Henok approves.
 5. **Label.** `ready-for-agent` only when every condition above holds; `ready-for-human` for what only Henok can do. Assign each labelled ticket to `me` in the same save.
 6. **Record.** The questions and answers go as a comment on the ticket.
-7. **Manifest.** With Henok, write the `round` note: `round · <date>`, then the tickets of one cluster (tickets connected by `blockedBy` or touching the same area), one per line, in his order: `1. ENG-905 (leaf)`, `2. ENG-894 (parent, 4 leaves)`. Set them to Todo in the current cycle. Tell Henok the round is ready; he says `go` to the Orchestrator.
+7. **Manifest.** With Henok, write the `round` note: `round · <date>`, then the tickets of one cluster (tickets connected by `blockedBy` or touching the same area), one per line, in his order: `1. ENG-905 (leaf)`, `2. ENG-894 (parent, 4 leaves)`. Only when Henok asks for it, write `mode: high autonomy` under the date line. Set them to Todo in the current cycle. Tell Henok the round is ready; he says `go` to the Orchestrator.
 
 What you define during a round waits for the next manifest. The one exception: a manifest ticket the Orchestrator sent back with a `Define:` line resumes in the same round once you label it.
 

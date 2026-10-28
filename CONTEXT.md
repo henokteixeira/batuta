@@ -43,8 +43,12 @@ A new slice on a ticket whose PR is already merged, dispatched in the same round
 _Avoid_: hotfix, fix ticket, patch PR
 
 **Concurrency limit**:
-At most three slices in flight at once.
+At most three slices in flight at once. A high-autonomy round has none but the machine's memory.
 _Avoid_: WIP limit, parallelism cap
+
+**High-autonomy round**:
+A round Henok asks for, marked `mode: high autonomy` in the round note: the whole manifest is dispatched at once, as far as the machine's memory allows; held slices still wait.
+_Avoid_: autonomous mode, yolo mode, full autonomy
 
 **Emergency slice**:
 A production emergency Henok decides to act on: its ticket is appended to the round note as `emergency: <ticket>` and dispatched next, inside the concurrency limit; with no round open it is a one-item manifest.
