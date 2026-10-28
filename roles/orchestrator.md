@@ -32,6 +32,8 @@ A manifest ticket without `ready-for-agent`, or with a blocker outside the manif
 
 At most three slices in flight. A slice waiting Henok frees its slot. At most one slice grilling Henok at a time.
 
+**High autonomy**: when the round note says `mode: high autonomy` under its date, the only limit is the machine. Dispatch the whole manifest, held slices excepted; before each recruit run `memory_pressure -Q`, and while free memory is under 25% recruit no one until a slot frees. The grilling limit and held slices still hold.
+
 ## Model routing
 
 | Ticket | Executor |
