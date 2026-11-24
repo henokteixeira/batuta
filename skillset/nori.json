@@ -22,6 +22,7 @@
       "maestri-workspace": "*",
       "prototype": "*",
       "receiving-code-review": "*",
+      "research": "*",
       "retro": "*",
       "systematic-debugging": "*",
       "test-driven-development": "*",
