@@ -9,7 +9,7 @@ Three-axis review of the diff between `HEAD` and a fixed point the user supplies
 - **Spec**: does the code faithfully implement the originating issue / spec?
 - **Attack**: what input, sequence or state makes this change produce a wrong result?
 
-The three axes run as **parallel sub-agents** so they don't pollute each other's context, then this skill aggregates their findings.
+The three axes run as **parallel sub-agents** so they don't pollute each other's context, then this skill aggregates their findings. Start every sub-agent with a fresh context window.
 
 Standards and Spec both ask whether the change matches something written down. Attack asks nothing of the kind: it assumes the change is wrong and goes looking for the case that proves it. Without that axis a review confirms the spec, and a case the spec never mentioned survives every gate.
 
@@ -29,14 +29,14 @@ Before going further, confirm the fixed point resolves (`git rev-parse <fixed-po
 
 Look for the originating spec, in this order:
 
-1. Issue references in the commit messages (`#123`, `Closes #45`, GitLab `!67`, etc.), fetched via the workflow in `docs/agents/issue-tracker.md`.
+1. Issue references in the commit messages (`#123`, `Closes #45`, GitLab `!67`, etc.), fetched from the issue tracker.
 2. A path the user passed as an argument.
 3. A spec file under `docs/`, `specs/`, or `.scratch/` matching the branch name or feature.
 4. If nothing is found, ask the user where the spec is. If they say there isn't one, the **Spec** sub-agent will skip and report "no spec available".
 
 ### 3. Identify the standards sources
 
-Anything in the repo that documents how code should be written, such as `CODING_STANDARDS.md` or `CONTRIBUTING.md`.
+Search the repo for every file that documents how code should be written. When `CODING_STANDARDS.md` or `CONTRIBUTING.md` exists, it must be on the list.
 
 On top of whatever the repo documents, the Standards axis always carries the **smell baseline** below: a fixed set of Fowler code smells (_Refactoring_, ch.3) that applies even when a repo documents nothing. Two rules bind it:
 
@@ -59,6 +59,8 @@ Each smell reads *what it is* → *how to fix*; match it against the diff:
 - **Refused Bequest**: a subclass or implementer that ignores or overrides most of what it inherits. → drop the inheritance, use composition.
 
 ### 4. Spawn the three sub-agents in parallel
+
+Issue the three sub-agent calls together, in the foreground, and aggregate the reports they return.
 
 **Standards sub-agent prompt** should include:
 
