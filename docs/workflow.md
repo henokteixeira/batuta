@@ -37,7 +37,7 @@ The Claude Code Notification hook points to `bin/notify-maestri.sh`.
 
 ## After editing the workflow
 
-- `skillset/`: with `NORI_SKILLSETS_COMMIT_ATTRIBUTION=agent` exported, back up `~/.claude/skills/synced`, run `nori-skillsets switch personal/batuta`, restore `synced`, then check the list below.
+- `skillset/`: the Maestri app updates its `maestri*` skills in `~/.claude/skills` on its own, so first copy any newer ones into `skillset/skills`; a switch reverts them. Then, with `NORI_SKILLSETS_COMMIT_ATTRIBUTION=agent` exported, back up `~/.claude/skills/synced`, run `nori-skillsets switch personal/batuta`, restore `synced`, then check the list below.
 - A role file: `/clear` that terminal.
 - A note template or `bin/setup-canvas`: rerun it in the Orquestrador. `round`, `for you` and `findings` are never overwritten; the retired `board` and `how it works` notes are deleted.
 
@@ -46,3 +46,4 @@ The Claude Code Notification hook points to `bin/notify-maestri.sh`.
 1. Notification hook still points to `bin/notify-maestri.sh`.
 2. `NORI_SKILLSETS_COMMIT_ATTRIBUTION=agent` is exported in `~/.zshrc`, so Nori leaves the co-author as Claude.
 3. The git author stays `henokteixeira <henokteixeira@gmail.com>`; `gh` and the Linear MCP are logged in as Henok.
+4. Nori's hooks in `~/.claude/settings.json` run from `~/.local/share/fnm/aliases/default`. The switch writes the pinned `node-versions/<version>` path, which breaks on the next Node upgrade.
