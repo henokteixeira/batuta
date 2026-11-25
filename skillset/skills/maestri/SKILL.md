@@ -19,17 +19,21 @@ Connected notes can be read and written through the `maestri` CLI.
 - `maestri ask --batch '{"Agent A": "prompt", "Agent B": "prompt"}'` — ask several connected agents at once, in parallel
 - `maestri ask "Agent Name" --raw "2\n"` — send raw input; use it for interactive menus or to send raw shell commands directly. Escapes: `\n` Enter, `\t` Tab, `\e` ESC, `\xNN` byte (`\x03` Ctrl-C). Special keys are ESC sequences, e.g. `\e[A` up arrow, `\e[Z` Shift-Tab.
 - `maestri check "Agent Name"` — read the agent's current terminal output on demand
-- `maestri note create ["content"] [--name "Name"] [--stack ["Fichário"]]` — create a new note on the canvas and link it to this terminal; `--name` pins a stable name that never changes with content. The response prints the exact assigned name
+- `maestri notify "message"`: send the user a system notification. Only when they asked to be notified; otherwise assume they're following along in Maestri.
+- `maestri note create ["content"] [--name "Name"] [--stack ["Fichário"]] [--color C]` — create a new note on the canvas and link it to this terminal; `--name` pins a stable name that never changes with content. The response prints the exact assigned name
 - `maestri note read "Note Name"` — read the full note with line numbers
 - `maestri note read "Note Name" 10 20` — read 20 lines starting from line 10
 - `maestri note write "Note Name" "content"` — replace a note's content entirely
 - `maestri note edit "Note Name" "old text" "new text"` — replace a substring within a note
 - `maestri note stack "Note Name" ["Fichário"]` — file (or move) an existing note into a fichário; `maestri note unstack "Note Name"` frees it
 - `maestri note delete "Note Name"` — remove a connected note from the canvas. **Destructive. Only run when the user explicitly asks you to delete the note.** Never delete a note on your own initiative, even to tidy up.
+- `maestri note delete --stack "Fichário"` — delete a fichário and its notes
+- `maestri arrange "Name" [--name N] [--icon I] [--color C]`: rename yourself, a note, or (as the Maestro) a teammate or band in place, or give it an icon or color. Style what you create; restyle what's already there only when the user asks. `maestri arrange` alone shows current looks, `--help` the choices.
 
 Always run `maestri list` first to get the exact agent and note names. An agent wired in from another workspace is listed as `Name @ Workspace`; that whole string is its name, use it exactly as printed.
-The response from `ask` returns as soon as the other agent finishes. Scale the Bash tool timeout to the estimated completion time, usually from 1min (easy) to 10min (most tasks). If you expect the response to exceed one terminal screen (e.g. code review, planning, debugging), use the ask back approach detailed below.
+The response from `ask` returns as soon as the other agent finishes. Scale the Bash tool timeout to the estimated completion time, usually from 1min (easy) to 10min (most tasks). A plain `ask` is for quick questions. Whenever you hand off a task (implementing, reviewing, investigating, planning, anything on a floor), use the ask back approach detailed below: `ask` returns only the agent's last screen, and a long task outlives your timeout, while an ask back reaches you in full even after your `ask` has timed out.
 If the timeout expires before the agent responds, do NOT re-send the prompt. Run `maestri check "Agent Name"` to see their progress, then wait again with an appropriate timeout. Never interrupt an agent that is still working, and do not edit files that the other agent is actively modifying — wait for them to finish first.
+An agent on a floor or workspace that was unloaded or not opened since launch is woken by `ask`; if the reply says it is still starting, ask again.
 The ask back approach: Tell the agent to report back with `maestri ask "Your Name" "<result>"` when done (your name is under `You:` in `maestri list`; when the agent is in another workspace, quote the `Name @ Workspace` address shown right under `You:` instead). This way their message resolves your waiting `ask` automatically and arrives in full as a new incoming prompt.
 Use `check` to read what an agent is currently showing without sending a prompt — useful to check if a previous request completed or to see its current state. Be careful not to misread unsent text in their TUI input area as instructions to you.
 

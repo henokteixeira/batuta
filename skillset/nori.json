@@ -38,7 +38,9 @@
       "wizard": "*",
       "writing-for-agents": "*",
       "writing-plans": "*",
-      "cleaning-mac-disk-space": "*"
+      "cleaning-mac-disk-space": "*",
+      "maestri-chat": "*",
+      "maestri-computer": "*"
     },
     "subagents": {
       "nori-code-researcher": "*",

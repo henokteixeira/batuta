@@ -66,7 +66,7 @@ Changes only the fields you pass. Use `--name` to rename. Changing the schedule 
 Resumes or pauses a routine without otherwise editing it.
 
 ### `maestri routine run "Name"`
-Fires a routine once, right now, regardless of its schedule — useful to test it. If the target terminal isn't running, the fire is skipped.
+Fires a routine once, right now, regardless of its schedule — useful to test it. A target on a floor or workspace that was unloaded or not opened since launch is woken first; one the user unloaded, or whose session ended, is skipped.
 
 ### `maestri routine delete "Name"`
 Removes a routine from the canvas. **Destructive — only on an explicit user request.**
