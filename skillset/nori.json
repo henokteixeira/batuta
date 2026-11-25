@@ -40,7 +40,10 @@
       "writing-plans": "*",
       "cleaning-mac-disk-space": "*",
       "maestri-chat": "*",
-      "maestri-computer": "*"
+      "maestri-computer": "*",
+      "codebase-design": "*",
+      "improve-codebase-architecture": "*",
+      "diagnosing-bugs": "*"
     },
     "subagents": {
       "nori-code-researcher": "*",
