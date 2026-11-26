@@ -24,7 +24,6 @@
       "receiving-code-review": "*",
       "research": "*",
       "retro": "*",
-      "systematic-debugging": "*",
       "test-driven-development": "*",
       "test-scenario-hygiene": "*",
       "testing-anti-patterns": "*",
@@ -40,7 +39,10 @@
       "writing-plans": "*",
       "cleaning-mac-disk-space": "*",
       "maestri-chat": "*",
-      "maestri-computer": "*"
+      "maestri-computer": "*",
+      "codebase-design": "*",
+      "improve-codebase-architecture": "*",
+      "diagnosing-bugs": "*"
     },
     "subagents": {
       "nori-code-researcher": "*",
